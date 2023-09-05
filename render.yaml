@@ -12,7 +12,7 @@ services:
   - type: web
     name: llama-app-backend
     runtime: docker
-    repo: https://github.com/run-llama/llama-app-backend.git
+    repo: https://github.com/run-llama/sec-insights.git
     region: oregon
     plan: standard
     rootDir: ./backend
@@ -37,7 +37,7 @@ services:
   - type: cron
     name: llama-app-cron
     runtime: docker
-    repo: https://github.com/run-llama/llama-app-backend.git
+    repo: https://github.com/run-llama/sec-insights.git
     region: oregon
     plan: standard
     rootDir: ./backend
