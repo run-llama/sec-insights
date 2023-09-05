@@ -27,27 +27,31 @@ Use this repository as a reference when building out your own RAG application or
 
 ## Tech Stack ⚒️
 - Frontend
-    - React/Next.js
-    - Tailwind CSS
+    - [React](https://react.dev/) / [Next.js](https://nextjs.org/)
+    - [Tailwind CSS](https://tailwindcss.com/)
 - Backend
-    - FastAPI
-    - Docker
-    - SQLAlchemy
-    - OpenAI
-    - PGVector
-    - LlamaIndex 🦙
+    - [FastAPI](https://fastapi.tiangolo.com/)
+    - [Docker](https://www.docker.com/)
+    - [SQLAlchemy](https://www.sqlalchemy.org/)
+    - [OpenAI](https://openai.com/) (gpt-3.5-turbo + text-embedding-ada-002)
+    - [PGVector](https://github.com/pgvector/pgvector)
+    - [LlamaIndex 🦙](https://www.llamaindex.ai/)
 - Infrastructure
-    - Render.com
+    - [Render.com](https://render.com/)
         - Backend hosting
-        - Postgres 15
-    - Vercel
+        - [Postgres 15](https://www.postgresql.org/)
+    - [Vercel](https://vercel.com/)
         - Frontend Hosting
-    - AWS
-        - Cloudfront
-        - S3
+    - [AWS](https://aws.amazon.com/)
+        - [Cloudfront](https://aws.amazon.com/cloudfront/)
+        - [S3](https://aws.amazon.com/s3/)
 
 ## Usage 💻
 See `README.md` files in `frontend/` & `backend/` folders for individual setup instructions for each.
 
-## 💡 Contributing
+## Caveats 🧐
+- The frontend currently doesn't support Mobile
+- Our main goal with this project is to provide a solid foundation for full-stack RAG apps. There is still plenty of room for improvement in terms of RAG performance!
+
+## Contributing 💡
 We remain very open to contributions! We're looking forward to seeing the ideas and improvements the LlamaIndex community is able to provide.
