@@ -4,7 +4,7 @@ SEC Insights uses the Retrieval Augment Generation (RAG) capabilities of [LlamaI
 You can start using the application now at [secinsights.ai](https://www.secinsights.ai/)
 
 ## Why did we make this? 🤔
-As RAG applications look to move increasingly from prototype to production, we thought our developer community would find it valuable to have a complete example of a working real world RAG application.
+As RAG applications look to move increasingly from prototype to production, we thought our developer community would find value in having a complete example of a working real world RAG application.
 
 SEC Insights works as well locally as it does in the cloud. It also comes with many product features that will be immediately applicable to most RAG applications.
 
@@ -51,7 +51,7 @@ See `README.md` files in `frontend/` & `backend/` folders for individual setup i
 
 ## Caveats 🧐
 - The frontend currently doesn't support Mobile
-- Our main goal with this project is to provide a solid foundation for full-stack RAG apps. There is still plenty of room for improvement in terms of RAG performance!
+- Our main goal with this project is to provide a solid foundation for full-stack RAG apps. There is still room for improvement in terms of RAG performance!
 
 ## Contributing 💡
 We remain very open to contributions! We're looking forward to seeing the ideas and improvements the LlamaIndex community is able to provide.
