@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border-top-color: #9ca3af; /* The color of your spinner */
+  animation: spin 1s linear infinite;
+}
+
+@layer components {
+  .landing-page-gradient-1 {
+    background-color: hsla(0,0%,100%,1);
+    background-image:
+      radial-gradient(at 21% 11%, hsla(240,51%,82%,0.53) 0px, transparent 50%),
+      radial-gradient(at 85% 0%, hsla(46,57%,78%,0.52) 0px, transparent 50%),
+      radial-gradient(at 91% 36%, hsla(221,100%,88%,0.68) 0px, transparent 50%),
+      radial-gradient(at 8% 40%, hsla(323,82%,92%,0.46) 0px, transparent 50%);
+  }
+}
+
+@layer components {
+  .landing-page-gradient-2 {
+    background-color: hsla(41, 0%, 100%, .5);
+    background-image:
+      radial-gradient(at 68% 65%, hsla(207, 75%, 92%, .5) 0px, transparent 20%),
+      radial-gradient(at 100% 38%, hsla(257, 98%, 92%, .5) 0px, transparent 20%),
+      radial-gradient(at 85% 56%, hsla(219, 0%, 100%, 0.7) 0px, transparent 20%),
+      radial-gradient(at 67% 82%, hsla(323, 0%, 100%, .5) 0px, transparent 20%),
+      radial-gradient(at 73% 46%, hsla(176, 72%, 92%, .5) 0px, transparent 20%),
+      radial-gradient(at 51% 53%, hsla(317, 60%, 92%, .5) 0px, transparent 20%);
+  }
+}
+
+@layer components {
+  .landing-page-gradient-3 {
+    background-color: hsla(0,0%,100%,1);
+    background-image:
+      radial-gradient(at 26% 56%, hsla(207,40%,91%,.5) 0px, transparent 20%),
+      radial-gradient(at 19% 43%, hsla(257,40%,91%,.51) 0px, transparent 20%),
+      radial-gradient(at 56% 54%, hsla(323,40%,91%,.51) 0px, transparent 20%),
+      radial-gradient(at 44% 62%, hsla(176,40%,91%,.51) 0px, transparent 20%),
+      radial-gradient(at 57% 45%, hsla(317,40%,91%,.51) 0px, transparent 20%);
+  }
+}
+
+@layer components {
+  .landing-page-gradient-4 {
+    background-color: hsla(0,0%,100%,1);
+    background-image:
+      radial-gradient(at 79% 89%, hsla(240,51%,82%,0.23) 0px, transparent 20%), /* 21% 11% -> 79% 89% */
+      radial-gradient(at 15% 100%, hsla(46,57%,78%,0.22) 0px, transparent 20%), /* 85% 0% -> 15% 100% */
+      radial-gradient(at 9% 64%, hsla(221,100%,88%,0.28) 0px, transparent 20%), /* 91% 36% -> 9% 64% */
+      radial-gradient(at 92% 60%, hsla(323,82%,92%,0.26) 0px, transparent 20%); /* 8% 40% -> 92% 60% */
+  }
+}
+
+
+@layer components {
+  .landing-page-gradient-5 {
+    background-color: hsla(0,0%,100%,1);
+    background-image:
+      radial-gradient(at 21% 11%, hsla(240,51%,82%,0.83) 0px, transparent 20%),
+      radial-gradient(at 85% 0%, hsla(46,57%,78%,0.82) 0px, transparent 20%),
+      radial-gradient(at 91% 36%, hsla(221,100%,88%,0.88) 0px, transparent 20%),
+      radial-gradient(at 8% 40%, hsla(323,82%,92%,0.86) 0px, transparent 20%);
+  }
+}
