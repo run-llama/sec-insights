@@ -1,5 +1,5 @@
 # SEC Insights 🏦
-SEC Insights uses the Retrieval Augment Generation (RAG) capabilities of [LlamaIndex](https://github.com/jerryjliu/llama_index) to answer questions about SEC 10-K & 10-Q documents.
+SEC Insights uses the Retrieval Augmented Generation (RAG) capabilities of [LlamaIndex](https://github.com/jerryjliu/llama_index) to answer questions about SEC 10-K & 10-Q documents.
 
 You can start using the application now at [secinsights.ai](https://www.secinsights.ai/)
 
