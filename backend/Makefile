@@ -19,9 +19,6 @@ test:
 chat:
 	poetry run python -m scripts.chat_llama
 
-chat_prod:
-	poetry run python -m scripts.chat_llama --base_url https://llama-app-backend.onrender.com
-
 seed_db_based_on_env:
 	# Call either seed_db or seed_db_preview, seed_db_local based on the environment
 	# This is used by the CI/CD pipeline
