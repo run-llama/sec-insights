@@ -14,6 +14,7 @@ Use this repository as a reference when building out your own RAG application or
 - Chat-based Document Q&A against a pool of documents
 - Citation of source data that LLM response was based on
 - PDF Viewer with highlighting of citations
+- Use of API-based tools ([polygon.io](https://polygon.io/)) for answering quantitative questions
 - Token-level streaming of LLM responses via [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 - Streaming of Reasoning Steps (Sub-Questions) within Chat
 
