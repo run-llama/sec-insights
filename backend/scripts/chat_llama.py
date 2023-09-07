@@ -45,6 +45,14 @@ class DocumentPickerCmd(cmd.Cmd):
         except ValueError:
             print("Invalid index. Please enter a number.")
 
+    def do_select_id(self, document_id):
+        "Select a document by it's ID"
+        if not document_id:
+            print("Please enter a valid document ID")
+        else:
+            self.selected_documents.append({"id": document_id})
+            print(f"Selected document ID {document_id}")
+
     def do_finish(self, args):
         "Finish the document selection process: FINISH"
         if len(self.selected_documents) > 0:
@@ -141,14 +149,7 @@ class ConversationCmd(cmd.Cmd):
 
     def do_quit(self, args):
         "Quits the program."
-        try:
-            if self.conversation_id is not None:
-                print("Quitting but first deleting convo.")
-                self.do_delete("")
-            else:
-                print("Quitting.")
-        except:
-            print("failed to delete")
+        print("Quitting.")
         raise SystemExit
 
 
