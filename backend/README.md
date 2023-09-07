@@ -15,6 +15,7 @@ Live at https://secinsights.ai/
 1. If this is your first time spinning up the service on your machine, run `docker compose up`
     - This will spin up the DB, LocalStack, and the FastAPI server all in their own containers but interconnected.
     - After all services in the compose stack have started running, exit with ctrl+c
+1. Run the database migrations with `make migrate`
 1. Run `make run` to start the server locally
     - This spins up the Postgres 15 DB & Localstack in their own docker containers.
     - The server will not run in a container but will instead run directly on your OS.
