@@ -49,6 +49,8 @@ Use this repository as a reference when building out your own RAG application or
 ## Usage 💻
 See `README.md` files in `frontend/` & `backend/` folders for individual setup instructions for each.
 
+We've also included a config for a [Github Codespace](https://github.com/features/codespaces) in [`.devcontainer/devcontainer.json`](https://github.com/run-llama/sec-insights/blob/main/.devcontainer/devcontainer.json). If you choose to use Github Codespaces, your codespace will come pre-configured with a lot of the libraries and system dependencies that are needed to run this project. This is probably the fastest way to get this project up and running!
+
 ## Caveats 🧐
 - The frontend currently doesn't support Mobile
 - Our main goal with this project is to provide a solid foundation for full-stack RAG apps. There is still room for improvement in terms of RAG performance!
