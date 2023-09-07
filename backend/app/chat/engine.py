@@ -275,6 +275,7 @@ async def get_chat_engine(
     api_query_engine_tools = [
         get_api_query_engine_tool(doc, service_context)
         for doc in conversation.documents
+        if DocumentMetadataKeysEnum.SEC_DOCUMENT in doc.metadata_map
     ]
 
     quantitative_question_engine = SubQuestionQueryEngine.from_defaults(
