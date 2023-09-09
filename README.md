@@ -22,10 +22,12 @@ Use this repository as a reference when building out your own RAG application or
 
 ## Development Features 🤓
 - Infrastructure-as-code for deploying directly to [Vercel](https://vercel.com/) & [Render](https://render.com/)
+- Continuous deployments provided by Vercel & Render.com. Shipping changes is as easy as merging into your `main` branch.
+- Production & Preview environments for both Frontend & Backend deployments! Easily try your changes before release.
 - Robust local environment setup making use of [LocalStack](https://localstack.cloud/) & [Docker](https://www.docker.com/) compose
 - Monitoring & Profiling provided by [Sentry](https://sentry.io/welcome/)
 - Load Testing provided by [Loader.io](https://loader.io/)
-- Variety of python scripts for REPL-based interaction & data management
+- Variety of python scripts for REPL-based chat & data management
 
 ## Tech Stack ⚒️
 - Frontend
