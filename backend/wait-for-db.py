@@ -2,11 +2,10 @@ import asyncio
 import asyncpg
 from app.core.config import settings
 
-database_url = "postgresql://user:password@db:5432/llama_app_db"
 
-async def check_database_connection(max_attempts: int = 30, sleep_interval: int = 1) -> bool:
+async def check_database_connection(database_url: str, max_attempts: int = 30, sleep_interval: int = 1) -> bool:
+    database_url = database_url.replace("postgresql+asyncpg://","postgresql://")
     for attempt in range(1, max_attempts + 1):
-        print(database_url + "hi")
         try:
             await asyncpg.connect(database_url)
             print(f"Connected to the database on attempt {attempt}.")
@@ -19,7 +18,7 @@ async def check_database_connection(max_attempts: int = 30, sleep_interval: int 
             await asyncio.sleep(sleep_interval)
 
 async def main():
-    if await check_database_connection():
+    if await check_database_connection(database_url=settings.DATABASE_URL):
         pass
 
 if __name__ == "__main__":
