@@ -13,6 +13,7 @@ from sqlalchemy.engine import create_engine, Engine
 from llama_index.text_splitter.utils import split_by_sentence_tokenizer
 
 from app.api.api import api_router
+from app.db.wait_for_db import check_database_connection
 from app.core.config import settings, AppEnvironment
 from app.loader_io import loader_io_router
 from contextlib import asynccontextmanager
@@ -63,6 +64,8 @@ def __setup_sentry():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # first wait for DB to be connectable
+    await check_database_connection()
     cfg = Config("alembic.ini")
     # Change DB URL to use psycopg2 driver for this specific check
     db_url = settings.DATABASE_URL.replace(
