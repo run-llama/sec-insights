@@ -6,7 +6,16 @@ run:
 
 run_docker:
 	echo "Running in local mode with docker."
-	docker compose up --build
+	# Check if .env file would set the DATABASE_URL parameter and ask the user to remove it
+	# from .env if it would
+	# This is needed because the DATABASE_URL parameter is set in docker-compose.yml
+	# Also account for the case where DATABASE_URL exists but has been commented out by
+	# doing a regex match to see that its at the start of a line
+	if [ -f .env ] && grep -q -E '^\s*DATABASE_URL\s*=' .env; then \
+		echo "The .env file contains a DATABASE_URL parameter. Please remove it from the .env file and try again."; \
+		exit 1; \
+	fi
+	docker compose up
 
 migrate:
 	echo "Running migrations."
