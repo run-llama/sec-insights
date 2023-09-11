@@ -13,8 +13,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    command: ["sh", "-c", "pip install asyncpg pydantic==1.10.8 && python ./wait-for-db.py"] 
-
     env_file:
       - .env
     environment:
