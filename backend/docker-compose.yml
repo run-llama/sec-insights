@@ -19,7 +19,7 @@ services:
       BACKEND_CORS_ORIGINS: '["http://localhost", "http://localhost:8000"]'
 
   db:
-    image: ankane/pgvector
+    image: ankane/pgvector:v0.5.0
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
