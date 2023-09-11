@@ -30,6 +30,7 @@ polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
 cachetools = "^5.3.1"
+greenlet = "^2.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
