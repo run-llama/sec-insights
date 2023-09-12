@@ -28,6 +28,16 @@ test:
 chat:
 	poetry run python -m scripts.chat_llama
 
+setup_localstack:
+	docker compose start localstack
+	echo "Waiting for localstack to start..."
+	sleep 3
+	awslocal s3 mb s3://${S3_ASSET_BUCKET_NAME}
+	awslocal s3 cp /tmp/index.html s3://${S3_ASSET_BUCKET_NAME}/index.html
+	rm /tmp/index.html
+	awslocal s3 website s3://${S3_ASSET_BUCKET_NAME}/ --index-document index.html
+	awslocal s3api put-bucket-cors --bucket ${S3_ASSET_BUCKET_NAME} --cors-configuration file://./localstack-cors-config.json
+
 seed_db_based_on_env:
 	# Call either seed_db or seed_db_preview, seed_db_local based on the environment
 	# This is used by the CI/CD pipeline
@@ -54,12 +64,5 @@ seed_db_local:
 	echo "Seeding database for local."
 	echo "<html>Hello world</html>" > /tmp/index.html
 	docker compose start db
-	docker compose start localstack
-	echo "Waiting for localstack to start..."
-	sleep 3
-	awslocal s3 mb s3://${S3_ASSET_BUCKET_NAME}
-	awslocal s3 cp /tmp/index.html s3://${S3_ASSET_BUCKET_NAME}/index.html
-	rm /tmp/index.html
-	awslocal s3 website s3://${S3_ASSET_BUCKET_NAME}/ --index-document index.html
-	awslocal s3api put-bucket-cors --bucket ${S3_ASSET_BUCKET_NAME} --cors-configuration file://./localstack-cors-config.json
+	make setup_localstack
 	python scripts/seed_db.py --ciks '["0001018724", "1326801"]'  --filing_types '["10-K"]'
