@@ -1,4 +1,8 @@
 # SEC Insights 🏦
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/run-llama/sec-insights)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 SEC Insights uses the Retrieval Augmented Generation (RAG) capabilities of [LlamaIndex](https://github.com/jerryjliu/llama_index) to answer questions about SEC 10-K & 10-Q documents.
 
 You can start using the application now at [secinsights.ai](https://www.secinsights.ai/)
@@ -59,6 +63,8 @@ See `README.md` files in `frontend/` & `backend/` folders for individual setup i
 We've also included a config for a [GitHub Codespace](https://github.com/features/codespaces) in [`.devcontainer/devcontainer.json`](https://github.com/run-llama/sec-insights/blob/main/.devcontainer/devcontainer.json). If you choose to use GitHub Codespaces, your codespace will come pre-configured with a lot of the libraries and system dependencies that are needed to run this project. This is probably the fastest way to get this project up and running!
 
 If you have any questions when trying to run this project, you may find your answer quickly by reviewing our [FAQ](./FAQ.md) or by searching through our [GitHub issues](https://github.com/run-llama/sec-insights/issues)! If you don't see a satisfactory answer to your question, feel free to [open a GitHub issue](https://github.com/run-llama/sec-insights/issues/new) so we may assist you!
+
+We also have a dedicated [#sec-insights channel on our Discord](https://discord.com/channels/1059199217496772688/1150942525968879636) where we may be able to assist with smaller issues more instantaneously.
 
 ## Caveats 🧐
 - The frontend currently doesn't support Mobile
