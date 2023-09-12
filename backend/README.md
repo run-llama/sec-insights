@@ -12,7 +12,7 @@ Live at https://secinsights.ai/
         - You can leave `AWS_KEY` & `AWS_SECRET` with dummy values
     1. `set -a`
     1. `source .env`
-1. If this is your first time spinning up the service on your machine, run `docker compose up`
+1. If this is your first time spinning up the service on your machine, run `make run_docker`
     - This will spin up the DB, LocalStack, and the FastAPI server all in their own containers but interconnected.
     - After all services in the compose stack have started running, exit with ctrl+c
 1. Run the database migrations with `make migrate`
@@ -60,7 +60,8 @@ Hello! How can I assist you today?
 ```
 
 ## SEC Document Downloader 📃
-We have a script to easily download SEC 10-K & 10-Q files!
+We have a script to easily download SEC 10-K & 10-Q files! This is a single step of the larger seed script described in the next section. Unless you have some use for just running this step on it's own, you probably want to stick to the Seed script described in the section below 🙂
+However, the setup instructions for this script are a pre-requisite for running the seed script.
 
 No API keys are needed to use this, it calls the SEC's free to use Edgar API.
 
@@ -107,8 +108,9 @@ This script will:
 ### Use Cases
 This is useful for times when:
 1. You want to setup a local environment with your local Postgres DB to have a set of documents in the `documents` table
-    1. When running locally, this will use [`localstack`](https://localstack.cloud/) to store the documents into a local S3 bucket instead of a real one.
+    * When running locally, this will use [`localstack`](https://localstack.cloud/) to store the documents into a local S3 bucket instead of a real one.
 1. You want to update the documents present in either Prod or Preview DBs
+    * In fact, this is the very script that is run by the [`llama-app-cron` cron job service](https://github.com/run-llama/sec-insights/blob/294d8e5/render.yaml#L38) that gets setup by the `render.yaml` blueprint when deploying this service to Render.com.
 
 ### Usage
 To run the script, make sure you've:
