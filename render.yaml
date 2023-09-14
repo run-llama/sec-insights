@@ -75,7 +75,7 @@ envVarGroups:
       value: https://d687lz8k56fia.cloudfront.net
       previewValue: https://dl94gqvzlh4k8.cloudfront.net
     - key: SENTRY_DSN
-      value: https://eba501c8450c42b0bbd2eb9467224e22@o4505586322833408.ingest.sentry.io/4505592019222528
+      sync: false
 - name: prod-web-secrets
   envVars:
     # Manually add a prod value for OPENAI_API_KEY in Render dashboard
