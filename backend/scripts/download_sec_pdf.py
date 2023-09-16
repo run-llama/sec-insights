@@ -5,6 +5,7 @@ import pdfkit
 from file_utils import filing_exists
 from fire import Fire
 from sec_edgar_downloader import Downloader
+from distutils.spawn import find_executable
 from tqdm.contrib.itertools import product
 
 DEFAULT_OUTPUT_DIR = "data/"
@@ -91,6 +92,12 @@ def main(
 ):
     print('Downloading filings to "{}"'.format(Path(output_dir).absolute()))
     print("File Types: {}".format(file_types))
+    if convert_to_pdf:
+        if find_executable("wkhtmltopdf") is None:
+            raise Exception(
+                "ERROR: wkhtmltopdf (https://wkhtmltopdf.org/) not found, "
+                "please install it to convert html to pdf"
+            )
     for symbol, file_type in product(ciks, file_types):
         try:
             if filing_exists(symbol, file_type, output_dir):
