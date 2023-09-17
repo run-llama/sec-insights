@@ -32,11 +32,18 @@ setup_localstack:
 	docker compose start localstack
 	echo "Waiting for localstack to start..."
 	sleep 3
+	# Check that S3_ASSET_BUCKET_NAME is set
+	if [ -z ${S3_ASSET_BUCKET_NAME} ]; then \
+		echo "S3_ASSET_BUCKET_NAME is not set. Please set it and try again."; \
+		exit 1; \
+	fi
 	awslocal s3 mb s3://${S3_ASSET_BUCKET_NAME}
+	echo "<html>LocalStack S3 bucket website is alive</html>" > /tmp/index.html
 	awslocal s3 cp /tmp/index.html s3://${S3_ASSET_BUCKET_NAME}/index.html
 	rm /tmp/index.html
 	awslocal s3 website s3://${S3_ASSET_BUCKET_NAME}/ --index-document index.html
 	awslocal s3api put-bucket-cors --bucket ${S3_ASSET_BUCKET_NAME} --cors-configuration file://./localstack-cors-config.json
+	echo "LocalStack S3 bucket website is ready. Open http://${S3_ASSET_BUCKET_NAME}.s3-website.localhost.localstack.cloud:4566 in your browser to verify."
 
 seed_db_based_on_env:
 	# Call either seed_db or seed_db_preview, seed_db_local based on the environment
@@ -62,7 +69,6 @@ seed_db_preview:
 
 seed_db_local:
 	echo "Seeding database for local."
-	echo "<html>Hello world</html>" > /tmp/index.html
 	docker compose start db
 	make setup_localstack
 	python scripts/seed_db.py --ciks '["0001018724", "1326801"]'  --filing_types '["10-K"]'
