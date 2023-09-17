@@ -96,7 +96,8 @@ def main(
         if find_executable("wkhtmltopdf") is None:
             raise Exception(
                 "ERROR: wkhtmltopdf (https://wkhtmltopdf.org/) not found, "
-                "please install it to convert html to pdf"
+                "please install it to convert html to pdf "
+                "`sudo apt-get install wkhtmltopdf`"
             )
     for symbol, file_type in product(ciks, file_types):
         try:
