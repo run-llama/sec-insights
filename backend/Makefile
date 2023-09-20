@@ -21,6 +21,7 @@ chat:
 	poetry run python -m scripts.chat_llama
 
 setup_localstack:
+	docker compose create localstack
 	docker compose start localstack
 	echo "Waiting for localstack to start..."
 	sleep 3
@@ -61,6 +62,7 @@ seed_db_preview:
 
 seed_db_local:
 	echo "Seeding database for local."
+	docker compose create db
 	docker compose start db
 	make setup_localstack
 	python scripts/seed_db.py --ciks '["0001018724", "1326801"]'  --filing_types '["10-K"]'
