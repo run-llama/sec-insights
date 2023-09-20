@@ -1,7 +1,7 @@
 run:
 	echo "Running in local mode."
-	docker compose start db
-	docker compose start localstack
+	docker compose create db localstack
+	docker compose start db localstack
 	poetry run start
 
 run_docker:
@@ -10,6 +10,7 @@ run_docker:
 
 migrate:
 	echo "Running migrations."
+	docker compose create db
 	docker compose start db
 	poetry run python -m alembic upgrade head
 
