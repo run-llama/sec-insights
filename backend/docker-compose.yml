@@ -3,8 +3,6 @@ services:
   llama-app-fastapi:
     build:
       context: .
-      args:
-        DATABASE_URL: postgresql://user:password@db:5432/llama_app_db
     volumes:
       # allows for live reloading of the app
       # when the code within the ./app directory changes
@@ -15,6 +13,7 @@ services:
       - db
     env_file:
       - .env
+      - .env.docker
     environment:
       BACKEND_CORS_ORIGINS: '["http://localhost", "http://localhost:8000"]'
 
