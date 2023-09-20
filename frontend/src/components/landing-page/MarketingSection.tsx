@@ -63,7 +63,7 @@ export const MarketingSection = () => {
 
         <div className="w-full text-center sm:w-1/2 sm:text-left">
           <div className="sm:3/5 mx-auto w-4/5 text-3xl font-bold sm:mx-0">
-            Take a peak under the hood and stream insights directly from the
+            Take a peek under the hood and stream insights directly from the
             algorithm
           </div>
           <div className="sm:3/5 mx-auto mt-3 w-4/5 font-lora text-xl sm:mx-0">
