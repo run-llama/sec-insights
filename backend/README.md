@@ -12,9 +12,6 @@ Live at https://secinsights.ai/
         - You can leave `AWS_KEY` & `AWS_SECRET` with dummy values
     1. `set -a`
     1. `source .env`
-1. If this is your first time spinning up the service on your machine, run `make run_docker`
-    - This will spin up the DB, LocalStack, and the FastAPI server all in their own containers but interconnected.
-    - After all services in the compose stack have started running, exit with ctrl+c
 1. Run the database migrations with `make migrate`
 1. Run `make run` to start the server locally
     - This spins up the Postgres 15 DB & Localstack in their own docker containers.
