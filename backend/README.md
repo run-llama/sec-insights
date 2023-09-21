@@ -89,7 +89,7 @@ These steps assume you've already followed the steps above for setting up your d
     - `sudo apt-get update`
     - `sudo apt-get install wkhtmltopdf`
 1. Get into your poetry shell with `poetry shell` from the project's root directory.
-1. Run the script! `python scripts/download_sec_pdf.py -o ~/mounted_bucket --file-types="['10-Q','10-K']"`
+1. Run the script! `python scripts/download_sec_pdf.py -o ~/mounted_folder --file-types="['10-Q','10-K']"`
     - Take a 🚽 break while it's running, it'll take a while!
 1. Go to AWS Console and verify you're seeing the SEC files in the S3 bucket.
 
