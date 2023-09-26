@@ -31,3 +31,9 @@ Here are some high level steps:
    1. Send a message within the newly created conversation with `message <your message here>` e.g. `message What is the document about?`
       * The first time that there is a message for a newly inserted document, the backend will need to go through the embedding + indexing process for that document which can take some time.
    1. Start chatting away! The platform should now be ready for questions regarding this document within this Chat REPL.
+
+You will also find that some of the prompts used in the application are specific to the SEC Insights use case. These will need to be changed to fit your particular use case. Here's an initial list of places in the codebase that may need to be changed to tune the prompts to your use case:
+* [Custom Response Synth prompt](https://github.com/run-llama/sec-insights/blob/e81c839/backend/app/chat/qa_response_synth.py#L15-L48)
+* [Vector Index tool descriptions](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/engine.py#L295-L296)
+* System Message ([template](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/constants.py#L3-L17) and [construction](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/engine.py#L336))
+* [User Message Prefix](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/messaging.py#L143-L145)
