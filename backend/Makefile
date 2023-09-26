@@ -14,6 +14,22 @@ migrate:
 	docker compose start db
 	poetry run python -m alembic upgrade head
 
+refresh_db:
+	# First ask for confirmation.
+	read -p "Are you sure you want to refresh the local database? This will delete all data in your local db. [y/N] " -n 1 -r; \
+	echo ""; \
+	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
+		make confirmed_refresh_db; \
+	else \
+		echo "Aborting."; \
+	fi
+
+confirmed_refresh_db:
+	echo "Refreshing database."
+	docker compose down db
+	docker volume rm backend_postgres_data
+	make migrate
+
 test:
 	poetry run python -m pytest tests/
 

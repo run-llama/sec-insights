@@ -157,7 +157,8 @@ async def build_doc_id_to_index_map(
         logger.debug("Loaded indices from storage.")
     except ValueError:
         logger.error(
-            "Failed to load indices from storage. Creating new indices.", exc_info=True
+            "Failed to load indices from storage. Creating new indices. "
+            "If you're running the seed_db script, this is normal and expected."
         )
         storage_context = StorageContext.from_defaults(
             persist_dir=persist_dir, vector_store=vector_store, fs=fs

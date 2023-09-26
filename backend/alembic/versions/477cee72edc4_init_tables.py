@@ -106,4 +106,8 @@ def downgrade() -> None:
     op.drop_table("message")
     op.drop_index(op.f("ix_conversation_id"), table_name="conversation")
     op.drop_table("conversation")
+    # remove enum types
+    op.execute('DROP TYPE "MessageRoleEnum"')
+    op.execute('DROP TYPE "MessageStatusEnum"')
+    op.execute('DROP TYPE "MessageSubProcessSourceEnum"')
     # ### end Alembic commands ###
