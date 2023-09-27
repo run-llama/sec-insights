@@ -37,3 +37,17 @@ You will also find that some of the prompts used in the application are specific
 * [Vector Index tool descriptions](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/engine.py#L295-L296)
 * System Message ([template](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/constants.py#L3-L17) and [construction](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/engine.py#L336))
 * [User Message Prefix](https://github.com/run-llama/sec-insights/blob/e81c83958a428e2aa02e8cb1280c3a17c55c4aa9/backend/app/chat/messaging.py#L143-L145)
+
+## How do I completely refresh my database?
+During development, you may find it useful or necessary to completely wipe out your database and start fresh with empty tables.
+
+To make this process simple, we have included a `make refresh_db` command in `backend/Makefile`. To use it, just do the following:
+- `cd` into the `backend/` folder if you're not already in it
+- Run `set -a` then `source .env`
+   - See instructions in `README.md` for more information on what this step does
+- Run `make refresh_db`
+   - This will ask for confirmation first and run as soon as you type either `y` or `N`.
+
+**What is this script doing?**
+
+When you run the database in the `db` container using `docker compose` and the various `make` commands, the container shares a data volume with your local machine. This ensures that the data in this local database is persisted even as the `db` container is started and stopped. As such, to completely refresh this database, you would first need to stop your DB container, delete these volumes, re-create the DB container, and re-apply the alembic migrations. That's what `make refresh_db` does.
