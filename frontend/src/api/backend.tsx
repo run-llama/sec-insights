@@ -22,7 +22,6 @@ interface GetConversationReturnType {
 class BackendClient {
   private async get(endpoint: string) {
     const url = backendUrl + endpoint;
-    console.log({url});
     const res = await fetch(url);
 
     if (!res.ok) {
