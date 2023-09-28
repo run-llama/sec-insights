@@ -18,13 +18,9 @@ migrate:
 
 refresh_db:
 	# First ask for confirmation.
-	read -p "Are you sure you want to refresh the local database? This will delete all data in your local db. [y/N] " -n 1 -r; \
-	echo ""; \
-	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
-		make confirmed_refresh_db; \
-	else \
-		echo "Aborting."; \
-	fi
+	@echo -n "Are you sure you want to refresh the local database? This will delete all data in your local db. [y/N] "; \
+	read ans; \
+	if [ $${ans:-'N'} = 'y' ]; then make confirmed_refresh_db; else echo "Aborting."; fi
 
 confirmed_refresh_db:
 	echo "Refreshing database."
