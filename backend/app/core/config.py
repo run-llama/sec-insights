@@ -70,6 +70,8 @@ class Settings(PreviewPrefixedSettings):
     LOG_LEVEL: str = "DEBUG"
     IS_PULL_REQUEST: bool = False
     RENDER: bool = False
+    CODESPACES: bool = False
+    CODESPACE_NAME: Optional[str]
     S3_BUCKET_NAME: str
     S3_ASSET_BUCKET_NAME: str
     CDN_BASE_URL: str
