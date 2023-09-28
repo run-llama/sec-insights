@@ -12,12 +12,12 @@ RUN apt-get update
 RUN apt-get install nodejs -y
 # Install frontend node modules
 ENV APP_HOME /app
+COPY . $APP_HOME
 WORKDIR $APP_HOME/frontend
 RUN npm install
 # Setup backend
 WORKDIR $APP_HOME/backend
 RUN pip install poetry
-COPY . ./
 RUN apt-get install libpq-dev gcc build-essential wkhtmltopdf  -y
 # Install docker
 # Add Docker's official GPG key:
