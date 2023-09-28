@@ -10,8 +10,6 @@ Live at https://secinsights.ai/
 1. Run `poetry install` to install dependencies for the project
 1. Create the `.env` file and source it. The `.env.development` file is a good template.
     1. `cp .env.development .env`
-    1. Modify the `.env` by adding your own API keys
-        - You can leave `AWS_KEY` & `AWS_SECRET` with dummy values
     1. `set -a`
     1. `source .env`
 1. Run the database migrations with `make migrate`
@@ -20,7 +18,7 @@ Live at https://secinsights.ai/
     - The server will not run in a container but will instead run directly on your OS.
         - This is to allow for use of debugging tools like `pdb`
 1. Lastly, you will likely want to populate your local database with some sample SEC filings
-    - We have a script for this! But first, open your `.env` file and replace the placeholder values for the `OPENAI_API_KEY` with your own OpenAI API key
+    - We have a script for this! But first, open your `.env` file and replace the placeholder value for the `OPENAI_API_KEY` with your own OpenAI API key
         - At some point you will want to do the same for the other secret keys in here like `POLYGON_IO_API_KEY`, `AWS_KEY`, & `AWS_SECRET`
     - Source the file again with `set -a` then `source .env`
     - Run `make seed_db_local`
