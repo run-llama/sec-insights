@@ -1,4 +1,8 @@
 {
   "name": "sec_insights",
-  "build": { "dockerfile": "Dockerfile", "context": ".." }
+  "dockerComposeFile": [
+    "../backend/docker-compose.yml",
+    "./docker-compose.workspace.yml"
+  ],
+  "service": "devcontainer-service"
 }

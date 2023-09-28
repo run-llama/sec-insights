@@ -1,0 +1,13 @@
+version: '3'
+services:
+  devcontainer-service:
+    build:
+      dockerfile: ./.devcontainer/Dockerfile
+      context: ..
+    volumes:
+      # allows for live reloading of the app
+      # when the code within the ./app directory changes
+      - ./:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - ../backend/.env.development
