@@ -1,4 +1,4 @@
 {
   "name": "sec_insights",
-  "build": { "dockerfile": "Dockerfile" }
+  "build": { "dockerfile": "Dockerfile", "context": ".." }
 }
