@@ -2,15 +2,25 @@
 FROM python:3.11.3-slim-bullseye
 
 ENV PYTHONUNBUFFERED True
+# Install Node.js
 RUN apt-get update
-RUN apt-get install nodejs npm
+RUN apt-get install -y ca-certificates curl gnupg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN NODE_MAJOR=20
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update
+RUN apt-get install nodejs -y
+# Install frontend node modules
 ENV APP_HOME /app
 WORKDIR $APP_HOME/frontend
 RUN npm install
+# Setup backend
 WORKDIR $APP_HOME/backend
 RUN pip install poetry
 COPY . ./
 RUN apt-get install libpq-dev gcc build-essential wkhtmltopdf  -y
+# Install docker
 # Add Docker's official GPG key:
 RUN apt-get update
 RUN apt-get install ca-certificates curl gnupg
