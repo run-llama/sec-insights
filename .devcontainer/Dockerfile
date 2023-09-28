@@ -24,7 +24,7 @@ RUN apt-get install libpq-dev gcc build-essential wkhtmltopdf  -y
 RUN apt-get update
 RUN apt-get install ca-certificates curl gnupg
 RUN  install -m 0755 -d /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 RUN chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the docker repository to Apt sources:
