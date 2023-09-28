@@ -18,9 +18,9 @@ migrate:
 
 refresh_db:
 	# First ask for confirmation.
-	@echo -n "Are you sure you want to refresh the local database? This will delete all data in your local db. [y/N] "; \
+	@echo -n "Are you sure you want to refresh the local database? This will delete all data in your local db. [Y/n] "; \
 	read ans; \
-	if [ $${ans:-'N'} = 'y' ]; then make confirmed_refresh_db; else echo "Aborting."; fi
+	if [ $${ans:-'N'} = 'Y' ]; then make confirmed_refresh_db; else echo "Aborting."; fi
 
 confirmed_refresh_db:
 	echo "Refreshing database."
