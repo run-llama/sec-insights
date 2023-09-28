@@ -2,13 +2,14 @@
 FROM python:3.11.3-slim-bullseye
 
 ENV PYTHONUNBUFFERED True
+RUN apt-get update
+RUN apt-get install nodejs npm
 ENV APP_HOME /app
 WORKDIR $APP_HOME/frontend
 RUN npm install
 WORKDIR $APP_HOME/backend
 RUN pip install poetry
 COPY . ./
-RUN apt-get update
 RUN apt-get install libpq-dev gcc build-essential wkhtmltopdf  -y
 # Add Docker's official GPG key:
 RUN apt-get update
