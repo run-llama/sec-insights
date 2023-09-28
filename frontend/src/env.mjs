@@ -17,6 +17,8 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_BACKEND_URL: z.string().min(1),
+    NEXT_PUBLIC_CODESPACES: z.string().default("false").optional(),
+    NEXT_PUBLIC_CODESPACE_NAME: z.string().optional(),
   },
 
   /**
@@ -26,6 +28,8 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
+    NEXT_PUBLIC_CODESPACES: process.env.CODESPACES,
+    NEXT_PUBLIC_CODESPACE_NAME: process.env.CODESPACE_NAME,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

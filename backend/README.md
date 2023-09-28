@@ -3,7 +3,9 @@ Live at https://secinsights.ai/
 ## Setup Dev Workspace
 1. Install [pyenv](https://github.com/pyenv/pyenv#automatic-installer) and then use it to install the Python version in `.python-version`.
     1. install pyenv with `curl https://pyenv.run | bash`
+    * This step can be skipped if you're running from the devcontainer image in Github Codespaces
 1. [Install docker](https://docs.docker.com/engine/install/)
+    * This step can be skipped if you're running from the devcontainer image in Github Codespaces
 1. Run `poetry shell`
 1. Run `poetry install` to install dependencies for the project
 1. Create the `.env` file and source it. The `.env.development` file is a good template.
@@ -17,6 +19,13 @@ Live at https://secinsights.ai/
     - This spins up the Postgres 15 DB & Localstack in their own docker containers.
     - The server will not run in a container but will instead run directly on your OS.
         - This is to allow for use of debugging tools like `pdb`
+1. Lastly, you will likely want to populate your local database with some sample SEC filings
+    - We have a script for this! But first, open your `.env` file and replace the placeholder values for the `OPENAI_API_KEY` with your own OpenAI API key
+        - At some point you will want to do the same for the other secret keys in here like `POLYGON_IO_API_KEY`, `AWS_KEY`, & `AWS_SECRET`
+    - Source the file again with `set -a` then `source .env`
+    - Run `make seed_db_local`
+        - If this step fails, you may find it helpful to run `make refresh_db` to wipe your local database and re-start with emptied tables.
+    - Done 🏁! You can run `make run` again and you should see some documents loaded at http://localhost:8000/api/document
 
 ## Scripts
 The `scripts/` folder contains several scripts that are useful for both operations and development.
@@ -71,23 +80,28 @@ These steps assume you've already followed the steps above for setting up your d
 
 1. Setup AWS CLI
     1. Install AWS CLI
-        - `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"`
-        - `unzip awscliv2.zip`
-        - `sudo ./aws/install`
+        - This step can be skipped if you're running from the devcontainer image in Github Codespaces
+        - Steps:
+            - `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"`
+            - `unzip awscliv2.zip`
+            - `sudo ./aws/install`
     1. Configure AWS CLI
         - This is mainly to set the AWS credentials that will later be used by s3fs
         - Run `aws configure` and enter the access key & secret key for a AWS IAM user that has access to the PDFs where you want to store the SEC files.
             - set the default AWS region to `us-east-1` (what we're primarily using).
 1. Setup [`s3fs`](https://github.com/s3fs-fuse/s3fs-fuse)
     1. Install s3fs
+        - This step can be skipped if you're running from the devcontainer image in Github Codespaces
         - `sudo apt install s3fs`
     1. Setup a s3fs mounted folder
         - Create the mounted folder locally `mkdir ~/mounted_folder`
         - `s3fs llama-app-web-assets-preview ~/mounted_folder`
             - You can replace `llama-app-web-assets-preview` with the name of the S3 bucket you want to upload the files to.
 1. Install [`wkhtmltopdf`](https://wkhtmltopdf.org/)
-    - `sudo apt-get update`
-    - `sudo apt-get install wkhtmltopdf`
+    - This step can be skipped if you're running from the devcontainer image in Github Codespaces
+    - Steps:
+        - `sudo apt-get update`
+        - `sudo apt-get install wkhtmltopdf`
 1. Get into your poetry shell with `poetry shell` from the project's root directory.
 1. Run the script! `python scripts/download_sec_pdf.py -o ~/mounted_folder --file-types="['10-Q','10-K']"`
     - Take a 🚽 break while it's running, it'll take a while!
