@@ -13,6 +13,8 @@ migrate:
 	docker compose create db
 	docker compose start db
 	poetry run python -m alembic upgrade head
+	# workaround for having PGVector create its tables
+	poetry run python -m scripts.build_vector_tables
 
 refresh_db:
 	# First ask for confirmation.
