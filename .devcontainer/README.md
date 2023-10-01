@@ -10,7 +10,7 @@ You can either click this button to open the dev container on a Github Codespace
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/run-llama/sec-insights)
 
-Or you can spin up the dev container up locally using [VS Code's dev container feature](https://code.visualstudio.com/docs/devcontainers/create-dev-container#_create-a-devcontainerjson-file).
+Or you can spin up the dev container locally using [VS Code's dev container feature](https://code.visualstudio.com/docs/devcontainers/create-dev-container#_create-a-devcontainerjson-file).
 
 ## What are the benefits of using this?
 * System level dependencies are pre-installed
