@@ -14,7 +14,7 @@ Or you can spin up the dev container up locally using [VS Code's dev container f
 
 ## What are the benefits of using this?
 * System level dependencies are pre-installed
-  * Project-specific python & node version
+  * Project-specific python version
   * Other dependencies like `wkhtmltopdf` & `s3fs` are pre-installed
   * Uses the same base Docker image as what's used for the production service
     * So higher fidelity between your dev environment and prod environment.
