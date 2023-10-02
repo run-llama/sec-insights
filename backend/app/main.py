@@ -9,6 +9,7 @@ from alembic.config import Config
 import alembic.config
 from alembic import script
 from alembic.runtime import migration
+from starlette.middleware import Middleware
 from sqlalchemy.engine import create_engine, Engine
 from llama_index.text_splitter.utils import split_by_sentence_tokenizer
 
@@ -89,13 +90,7 @@ async def lifespan(app: FastAPI):
     await vector_store.close()
 
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_PREFIX}/openapi.json",
-    lifespan=lifespan,
-)
-
-
+middleware = []
 if settings.BACKEND_CORS_ORIGINS:
     origins = settings.BACKEND_CORS_ORIGINS.copy()
     if settings.CODESPACES and settings.CODESPACE_NAME and \
@@ -103,14 +98,22 @@ if settings.BACKEND_CORS_ORIGINS:
         # add codespace origin if running in Github codespace
         origins.append(f"https://{settings.CODESPACE_NAME}-3000.app.github.dev")
     # allow all origins
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=origins,
-        allow_origin_regex="https://llama-app-frontend.*\.vercel\.app",
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+    middleware.append(
+        Middleware(
+            CORSMiddleware,
+            allow_origins=origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
     )
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_PREFIX}/openapi.json",
+    lifespan=lifespan,
+    middleware=middleware,
+)
 
 app.include_router(api_router, prefix=settings.API_PREFIX)
 app.mount(f"/{settings.LOADER_IO_VERIFICATION_STR}", loader_io_router)
