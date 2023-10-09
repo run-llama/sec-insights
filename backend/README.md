@@ -25,6 +25,11 @@ Live at https://secinsights.ai/
         - If this step fails, you may find it helpful to run `make refresh_db` to wipe your local database and re-start with emptied tables.
     - Done 🏁! You can run `make run` again and you should see some documents loaded at http://localhost:8000/api/document
 
+For any issues in setting up the above or during the rest of your development, you can check for solutions in the following places:
+- [`backend/troubleshooting.md`](https://github.com/run-llama/sec-insights/blob/main/backend/troubleshooting.md)
+- [Open & already closed Github Issues](https://github.com/run-llama/sec-insights/issues?q=is%3Aissue+is%3Aclosed)
+- The [#sec-insights discord channel](https://discord.com/channels/1059199217496772688/1150942525968879636)
+
 ## Scripts
 The `scripts/` folder contains several scripts that are useful for both operations and development.
 
