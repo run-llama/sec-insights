@@ -39,7 +39,7 @@ pytest = "^7.3.2"
 sseclient-py = "^1.7.2"
 pdfkit = "^1.0.0"
 fire = "^0.5.0"
-sec-edgar-downloader = "^4.3.0"
+sec-edgar-downloader = "~5.0"
 pytickersymbols = "^1.13.0"
 awscli-local = "^0.20"
 
