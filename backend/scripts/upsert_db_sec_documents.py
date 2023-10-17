@@ -23,7 +23,7 @@ DEFAULT_DOC_DIR = "data/"
 
 async def upsert_document(doc_dir: str, stock: Stock, filing: Filing, url_base: str):
     # construct a string for just the document's sub-path after the doc_dir
-    # e.g. "sec-edgar-filings/AAPL/10-K/0000320193-20-000096/filing-details.pdf"
+    # e.g. "sec-edgar-filings/AAPL/10-K/0000320193-20-000096/primary-document.pdf"
     doc_path = Path(filing.file_path).relative_to(doc_dir)
     url_path = url_base.rstrip("/") + "/" + str(doc_path).lstrip("/")
     doc_type = (

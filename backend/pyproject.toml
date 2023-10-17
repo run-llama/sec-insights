@@ -31,6 +31,7 @@ polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
 cachetools = "^5.3.1"
 greenlet = "^2.0.2"
+email-validator = "^2.0.0.post2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -39,7 +40,7 @@ pytest = "^7.3.2"
 sseclient-py = "^1.7.2"
 pdfkit = "^1.0.0"
 fire = "^0.5.0"
-sec-edgar-downloader = "^4.3.0"
+sec-edgar-downloader = "~5.0"
 pytickersymbols = "^1.13.0"
 awscli-local = "^0.20"
 

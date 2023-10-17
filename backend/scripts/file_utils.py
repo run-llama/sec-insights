@@ -120,7 +120,7 @@ def get_available_filings(output_dir: str) -> List[Filing]:
     for cik_dir in data_dir.iterdir():
         for filing_type_dir in cik_dir.iterdir():
             for filing_dir in filing_type_dir.iterdir():
-                filing_pdf = filing_dir / "filing-details.pdf"
+                filing_pdf = filing_dir / "primary-document.pdf"
                 full_submission_txt = filing_dir / "full-submission.txt"
                 if filing_pdf.exists():
                     filing_type = filing_type_dir.name

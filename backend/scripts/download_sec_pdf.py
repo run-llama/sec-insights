@@ -7,6 +7,7 @@ from fire import Fire
 from sec_edgar_downloader import Downloader
 from distutils.spawn import find_executable
 from tqdm.contrib.itertools import product
+from app.core.config import settings
 
 DEFAULT_OUTPUT_DIR = "data/"
 # You can lookup the CIK for a company here: https://www.sec.gov/edgar/searchedgar/companysearch
@@ -47,10 +48,10 @@ DEFAULT_FILING_TYPES = [
 
 
 def _download_filing(
-    cik: str, filing_type: str, output_dir: str, amount=None, before=None, after=None
+    cik: str, filing_type: str, output_dir: str, limit=None, before=None, after=None
 ):
-    dl = Downloader(output_dir)
-    dl.get(filing_type, cik, amount=amount, before=before, after=after)
+    dl = Downloader(settings.SEC_EDGAR_COMPANY_NAME, settings.SEC_EDGAR_EMAIL, output_dir)
+    dl.get(filing_type, cik, limit=limit, before=before, after=after, download_details=True)
 
 
 def _convert_to_pdf(output_dir: str):
@@ -62,15 +63,16 @@ def _convert_to_pdf(output_dir: str):
     # │   ├── AAPL
     # │   │   ├── 10-K
     # │   │   │   ├── 0000320193-20-000096
-    # │   │   │   │   ├── filing-details.html
-    # │   │   │   │   ├── filing-details.pdf   <-- this is what we want
+    # │   │   │   │   ├── primary-document.html
+    # │   │   │   │   ├── primary-document.pdf   <-- this is what we want
 
     data_dir = Path(output_dir) / "sec-edgar-filings"
+
     for cik_dir in data_dir.iterdir():
         for filing_type_dir in cik_dir.iterdir():
             for filing_dir in filing_type_dir.iterdir():
-                filing_doc = filing_dir / "filing-details.html"
-                filing_pdf = filing_dir / "filing-details.pdf"
+                filing_doc = filing_dir / "primary-document.html"
+                filing_pdf = filing_dir / "primary-document.pdf"
                 if filing_doc.exists() and not filing_pdf.exists():
                     print("- Converting {}".format(filing_doc))
                     input_path = str(filing_doc.absolute())
@@ -87,7 +89,7 @@ def main(
     file_types: List[str] = DEFAULT_FILING_TYPES,
     before: Optional[str] = None,
     after: Optional[str] = None,
-    amount: Optional[int] = 3,
+    limit: Optional[int] = 3,
     convert_to_pdf: bool = True,
 ):
     print('Downloading filings to "{}"'.format(Path(output_dir).absolute()))
@@ -105,7 +107,7 @@ def main(
                 print(f"- Filing for {symbol} {file_type} already exists, skipping")
             else:
                 print(f"- Downloading filing for {symbol} {file_type}")
-                _download_filing(symbol, file_type, output_dir, amount, before, after)
+                _download_filing(symbol, file_type, output_dir, limit, before, after)
         except Exception as e:
             print(
                 f"Error downloading filing for symbol={symbol} & file_type={file_type}: {e}"
