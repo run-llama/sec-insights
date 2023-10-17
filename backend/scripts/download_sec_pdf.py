@@ -7,6 +7,7 @@ from fire import Fire
 from sec_edgar_downloader import Downloader
 from distutils.spawn import find_executable
 from tqdm.contrib.itertools import product
+from app.core.config import settings
 
 DEFAULT_OUTPUT_DIR = "data/"
 # You can lookup the CIK for a company here: https://www.sec.gov/edgar/searchedgar/companysearch
@@ -49,7 +50,7 @@ DEFAULT_FILING_TYPES = [
 def _download_filing(
     cik: str, filing_type: str, output_dir: str, limit=None, before=None, after=None
 ):
-    dl = Downloader("sec-insights", "user@email.com", output_dir)
+    dl = Downloader(settings.SEC_EDGAR_COMPANY_NAME, settings.SEC_EDGAR_EMAIL, output_dir)
     dl.get(filing_type, cik, limit=limit, before=before, after=after, download_details=True)
 
 

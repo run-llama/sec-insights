@@ -20,6 +20,7 @@ Live at https://secinsights.ai/
 1. Lastly, you will likely want to populate your local database with some sample SEC filings
     - We have a script for this! But first, open your `.env` file and replace the placeholder value for the `OPENAI_API_KEY` with your own OpenAI API key
         - At some point you will want to do the same for the other secret keys in here like `POLYGON_IO_API_KEY`, `AWS_KEY`, & `AWS_SECRET`
+        - To follow the [SEC's Internet Security Policy](https://www.sec.gov/os/webmaster-faq#code-support), make sure to also replace the `SEC_EDGAR_COMPANY_NAME` & `SEC_EDGAR_EMAIL` values in the `.env` file with your own values.
     - Source the file again with `set -a` then `source .env`
     - Run `make seed_db_local`
         - If this step fails, you may find it helpful to run `make refresh_db` to wipe your local database and re-start with emptied tables.
