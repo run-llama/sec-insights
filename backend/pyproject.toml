@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10,<3.12"
 fastapi = "0.100.1"
 pydantic = "^1.10.8"
 uvicorn = "^0.22.0"
@@ -25,7 +25,7 @@ fsspec = "^2023.6.0"
 pdfkit = "^1.0.0"
 pgvector = "^0.1.8"
 sentry-sdk = {extras = ["fastapi"], version = "^1.28.1"}
-llama-index = "^0.8.2"
+llama-index = "0.8.55"
 polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"

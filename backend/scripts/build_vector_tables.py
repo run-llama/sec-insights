@@ -1,6 +1,4 @@
 from fire import Fire
-from app.schema import Document
-from app.db.session import SessionLocal
 from app.chat.pg_vector import get_vector_store_singleton
 import asyncio
 
