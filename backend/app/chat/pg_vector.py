@@ -40,6 +40,7 @@ class CustomPGVectorStore(PGVectorStore):
         global did_run_setup
         if did_run_setup:
             return
+        self._initialize()
         async with self._async_session() as session:
             async with session.begin():
                 statement = sqlalchemy.text("CREATE EXTENSION IF NOT EXISTS vector")

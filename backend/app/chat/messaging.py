@@ -1,8 +1,8 @@
 from typing import Dict, Any, Optional, List
 import asyncio
-import queue
 import logging
 from uuid import uuid4
+from anyio import ClosedResourceError
 from anyio.streams.memory import MemoryObjectSendStream
 
 from llama_index.callbacks.base import BaseCallbackHandler
@@ -102,14 +102,17 @@ class ChatCallbackHandler(BaseCallbackHandler):
         if self._send_chan._closed:
             logger.debug("Received event after send channel closed. Ignoring.")
             return
-        await self._send_chan.send(
-            StreamedMessageSubProcess(
-                source=source,
-                metadata_map=metadata_map,
-                event_id=event_id,
-                has_ended=not is_start_event,
+        try:
+            await self._send_chan.send(
+                StreamedMessageSubProcess(
+                    source=source,
+                    metadata_map=metadata_map,
+                    event_id=event_id,
+                    has_ended=not is_start_event,
+                )
             )
-        )
+        except ClosedResourceError:
+            logger.exception("Tried sending SubProcess event after channel was closed")
 
     def start_trace(self, trace_id: Optional[str] = None) -> None:
         """No-op."""
