@@ -170,6 +170,20 @@ dev = ["aiounittest (==1.4.1)", "attribution (==1.6.2)", "black (==23.3.0)", "co
 docs = ["sphinx (==6.1.3)", "sphinx-mdinclude (==0.5.3)"]
 
 [[package]]
+name = "aiostream"
+version = "0.5.2"
+description = "Generator-based operators for asynchronous iteration"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "aiostream-0.5.2-py3-none-any.whl", hash = "sha256:054660370be9d37f6fe3ece3851009240416bd082e469fd90cc8673d3818cf71"},
+    {file = "aiostream-0.5.2.tar.gz", hash = "sha256:b71b519a2d66c38f0872403ab86417955b77352f08d9ad02ad46fc3926b389f4"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
 name = "alembic"
 version = "1.11.2"
 description = "A database migration tool for SQLAlchemy."
@@ -322,24 +336,6 @@ localstack-client = "*"
 
 [package.extras]
 ver1 = ["awscli"]
-
-[[package]]
-name = "beautifulsoup4"
-version = "4.12.2"
-description = "Screen-scraping library"
-optional = false
-python-versions = ">=3.6.0"
-files = [
-    {file = "beautifulsoup4-4.12.2-py3-none-any.whl", hash = "sha256:bd2520ca0d9d7d12694a53d44ac482d181b4ec1888909b035a3dbf40d0f57d4a"},
-    {file = "beautifulsoup4-4.12.2.tar.gz", hash = "sha256:492bbc69dca35d12daac71c4db1bfff0c876c00ef4a2ffacce226d4638eb72da"},
-]
-
-[package.dependencies]
-soupsieve = ">1.2"
-
-[package.extras]
-html5lib = ["html5lib"]
-lxml = ["lxml"]
 
 [[package]]
 name = "boto3"
@@ -528,6 +524,23 @@ typing-inspect = ">=0.4.0"
 
 [package.extras]
 dev = ["flake8", "hypothesis", "ipython", "mypy (>=0.710)", "portray", "pytest (>=7.2.0)", "setuptools", "simplejson", "twine", "types-dataclasses", "wheel"]
+
+[[package]]
+name = "deprecated"
+version = "1.2.14"
+description = "Python @deprecated decorator to deprecate old python classes, functions or methods."
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+files = [
+    {file = "Deprecated-1.2.14-py2.py3-none-any.whl", hash = "sha256:6fac8b097794a90302bdbb17b9b815e732d3c4720583ff1b198499d78470466c"},
+    {file = "Deprecated-1.2.14.tar.gz", hash = "sha256:e5323eb936458dccc2582dc6f9c322c852a775a27065ff2b0c4970b9d53d01b3"},
+]
+
+[package.dependencies]
+wrapt = ">=1.10,<2"
+
+[package.extras]
+dev = ["PyTest", "PyTest-Cov", "bump2version (<1)", "sphinx (<2)", "tox"]
 
 [[package]]
 name = "dill"
@@ -1049,31 +1062,37 @@ files = [
 
 [[package]]
 name = "llama-index"
-version = "0.8.42"
+version = "0.8.55"
 description = "Interface between LLMs and your data"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8.1,<3.12"
 files = [
-    {file = "llama_index-0.8.42-py3-none-any.whl", hash = "sha256:08720554ceaef169e1a151f4fd982c0555703e85b23bf0dbf290d9dc0605655d"},
-    {file = "llama_index-0.8.42.tar.gz", hash = "sha256:14cca43188d9afd058d74c5574e745dc937e724a20576a9ef81967b9f2659b03"},
+    {file = "llama_index-0.8.55-py3-none-any.whl", hash = "sha256:beef377bb4a9094668283fb45d010f6feea21b584988354a977224055c4bed89"},
+    {file = "llama_index-0.8.55.tar.gz", hash = "sha256:e232adbbdd3c3910730e7c165487bbe3818e3bf68a5aa9c513cb8507d505ec46"},
 ]
 
 [package.dependencies]
-beautifulsoup4 = "*"
-dataclasses-json = "*"
+aiostream = ">=0.5.2,<0.6.0"
+dataclasses-json = ">=0.5.7,<0.6.0"
+deprecated = ">=1.2.9.3"
 fsspec = ">=2023.5.0"
 langchain = ">=0.0.303"
-nest-asyncio = "*"
-nltk = "*"
+nest-asyncio = ">=1.5.8,<2.0.0"
+nltk = ">=3.8.1,<4.0.0"
 numpy = "*"
 openai = ">=0.26.4"
 pandas = "*"
-sqlalchemy = ">=2.0.15"
+SQLAlchemy = {version = ">=1.4.49", extras = ["asyncio"]}
 tenacity = ">=8.2.0,<9.0.0"
-tiktoken = "*"
+tiktoken = ">=0.3.3"
 typing-extensions = ">=4.5.0"
 typing-inspect = ">=0.8.0"
 urllib3 = "<2"
+
+[package.extras]
+local-models = ["optimum[onnxruntime] (>=1.13.2,<2.0.0)", "sentencepiece (>=0.1.99,<0.2.0)", "transformers[torch] (>=4.34.0,<5.0.0)"]
+postgres = ["asyncpg (>=0.28.0,<0.29.0)", "pgvector (>=0.1.0,<0.2.0)", "psycopg-binary (>=3.1.12,<4.0.0)"]
+query-tools = ["guidance (>=0.0.64,<0.0.65)", "jsonpath-ng (>=1.6.0,<2.0.0)", "rank-bm25 (>=0.2.2,<0.3.0)", "scikit-learn (<1.3.0)", "spacy (>=3.7.1,<4.0.0)"]
 
 [[package]]
 name = "localstack-client"
@@ -1320,13 +1339,13 @@ files = [
 
 [[package]]
 name = "nest-asyncio"
-version = "1.5.7"
+version = "1.5.8"
 description = "Patch asyncio to allow nested event loops"
 optional = false
 python-versions = ">=3.5"
 files = [
-    {file = "nest_asyncio-1.5.7-py3-none-any.whl", hash = "sha256:5301c82941b550b3123a1ea772ba9a1c80bad3a182be8c1a5ae6ad3be57a9657"},
-    {file = "nest_asyncio-1.5.7.tar.gz", hash = "sha256:6a80f7b98f24d9083ed24608977c09dd608d83f91cccc24c9d2cba6d10e01c10"},
+    {file = "nest_asyncio-1.5.8-py3-none-any.whl", hash = "sha256:accda7a339a70599cb08f9dd09a67e0c2ef8d8d6f4c07f96ab203f2ae254e48d"},
+    {file = "nest_asyncio-1.5.8.tar.gz", hash = "sha256:25aa2ca0d2a5b5531956b9e273b45cf664cae2b145101d73b86b199978d48fdb"},
 ]
 
 [[package]]
@@ -2134,17 +2153,6 @@ files = [
 ]
 
 [[package]]
-name = "soupsieve"
-version = "2.4.1"
-description = "A modern CSS selector implementation for Beautiful Soup."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "soupsieve-2.4.1-py3-none-any.whl", hash = "sha256:1c1bfee6819544a3447586c889157365a27e10d88cde3ad3da0cf0ddf646feb8"},
-    {file = "soupsieve-2.4.1.tar.gz", hash = "sha256:89d12b2d5dfcd2c9e8c22326da9d9aa9cb3dfab0a83a024f05704076ee8d35ea"},
-]
-
-[[package]]
 name = "sqlalchemy"
 version = "2.0.19"
 description = "Database Abstraction Library"
@@ -2195,7 +2203,7 @@ files = [
 ]
 
 [package.dependencies]
-greenlet = {version = "!=0.4.17", markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\""}
+greenlet = {version = "!=0.4.17", optional = true, markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\" or extra == \"asyncio\""}
 typing-extensions = ">=4.2.0"
 
 [package.extras]
@@ -2732,5 +2740,5 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "08c7aa4d3a8727460ec9dd5426cb513ff5e43a0af48403f0fdd87a3f5b582799"
+python-versions = "^3.10,<3.12"
+content-hash = "16f64231b14e96214c3c1ca852c1ae0c7b0db41db444d9839f3c45054dc48590"
