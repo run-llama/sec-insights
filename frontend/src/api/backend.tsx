@@ -1,6 +1,6 @@
 import { backendUrl } from "~/config";
 import type { Message } from "~/types/conversation";
-import type { BackendDocument } from "~/types/backend/document";
+import { BackendDocumentType, type BackendDocument } from "~/types/backend/document";
 import { SecDocument } from "~/types/document";
 import { fromBackendDocumentToFrontend } from "./utils/documents";
 
@@ -60,9 +60,27 @@ class BackendClient {
     const res = await this.get(endpoint);
     const data = (await res.json()) as GetConversationPayload;
 
+    const newData = [];
+    for (let i = 0; i < data.documents.length; i++) {
+      const element = data.documents[i];
+      // if (element) {
+      //   element.url = "https://mock-data-20scoops.s3.ap-southeast-1.amazonaws.com/APznzaae_PHPfTErTBgZWvRwZsEkVhu5EEW445RNiEIFiQNNzhHfPD5UWHsEIzfPFaQG4GQxvqeLlbALtsCuA0CIwe1RXUIq8u0Bvq6aa-FYhHNxAWnTez0B2VsRaE33JblvzQGW47XITwA5N-PE4OZpCJMDThoBmKJof6rq3vVPIdSwNQrNCKcNDdXKqcKqy0TES3CVioBuUmBPOhnt6kqV9eK3UL1lLxjAUHmirXu3b42h.pdf";
+      // }
+      if (element?.metadata_map) {
+        element.metadata_map.sec_document = {
+          year: 2021,
+          doc_type: BackendDocumentType.TenK,
+          company_name: `Book ${i}`,
+          company_ticker: `BK_${i}`,
+          quarter: 1
+        };
+      }
+      newData.push(element);
+    }
+
     return {
       messages: data.messages,
-      documents: fromBackendDocumentToFrontend(data.documents),
+      documents: fromBackendDocumentToFrontend(newData as BackendDocument[]),
     };
   }
 
@@ -70,7 +88,24 @@ class BackendClient {
     const endpoint = `api/document/`;
     const res = await this.get(endpoint);
     const data = (await res.json()) as BackendDocument[];
-    const docs = fromBackendDocumentToFrontend(data);
+    const newData = [];
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      // if (element) {
+      //   element.url = "https://mock-data-20scoops.s3.ap-southeast-1.amazonaws.com/APznzaae_PHPfTErTBgZWvRwZsEkVhu5EEW445RNiEIFiQNNzhHfPD5UWHsEIzfPFaQG4GQxvqeLlbALtsCuA0CIwe1RXUIq8u0Bvq6aa-FYhHNxAWnTez0B2VsRaE33JblvzQGW47XITwA5N-PE4OZpCJMDThoBmKJof6rq3vVPIdSwNQrNCKcNDdXKqcKqy0TES3CVioBuUmBPOhnt6kqV9eK3UL1lLxjAUHmirXu3b42h.pdf";
+      // }
+      if (element?.metadata_map) {
+        element.metadata_map.sec_document = {
+          year: 2021,
+          doc_type: BackendDocumentType.TenK,
+          company_name: `Book ${i}`,
+          company_ticker: `BK_${i}`,
+          quarter: 1
+        };
+      }
+      newData.push(element);
+    }
+    const docs = fromBackendDocumentToFrontend(newData as BackendDocument[]);
     return docs;
   }
 }
