@@ -50,4 +50,4 @@ To make this process simple, we have included a `make refresh_db` command in `ba
 
 **What is this script doing?**
 
-When you run the database in the `db` container using `docker compose` and the various `make` commands, the container shares a data volume with your local machine. This ensures that the data in this local database is persisted even as the `db` container is started and stopped. As such, to completely refresh this database, you would first need to stop your DB container, delete these volumes, re-create the DB container, and re-apply the alembic migrations. That's what `make refresh_db` does.
+When you run the database in the `db` container using `docker-compose` and the various `make` commands, the container shares a data volume with your local machine. This ensures that the data in this local database is persisted even as the `db` container is started and stopped. As such, to completely refresh this database, you would first need to stop your DB container, delete these volumes, re-create the DB container, and re-apply the alembic migrations. That's what `make refresh_db` does.

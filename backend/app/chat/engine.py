@@ -64,6 +64,24 @@ logger = logging.getLogger(__name__)
 logger.info("Applying nested asyncio patch")
 nest_asyncio.apply()
 
+def messages_to_prompt(messages):
+  prompt = ""
+  for message in messages:
+    if message.role == 'system':
+      prompt += f"<|system|>\n{message.content}</s>\n"
+    elif message.role == 'user':
+      prompt += f"<|user|>\n{message.content}</s>\n"
+    elif message.role == 'assistant':
+      prompt += f"<|assistant|>\n{message.content}</s>\n"
+
+  # ensure we start with a system prompt, insert blank if needed
+  if not prompt.startswith("<|system|>\n"):
+    prompt = "<|system|>\n</s>\n" + prompt
+
+  # add final assistant prompt
+  prompt = prompt + "<|assistant|>\n"
+
+  return prompt
 
 def get_s3_fs() -> AsyncFileSystem:
     s3 = s3fs.S3FileSystem(
@@ -214,24 +232,44 @@ def get_tool_service_context(
     callback_handlers: List[BaseCallbackHandler],
 ) -> ServiceContext:
     
-    query_wrapper_prompt = PromptTemplate(
-        "Below is an instruction that describes a task. "
-        "Write a response that appropriately completes the request.\n\n"
-        "### Instruction:\n{query_str}\n\n### Response:"
-    )
-    
+    # system_prompt = """<|SYSTEM|># StableLM Tuned (Alpha version)
+    # - StableLM is a helpful and harmless open-source AI language model developed by StabilityAI.
+    # - StableLM is excited to be able to help the user, but will refuse to do anything that could be considered harmful to the user.
+    # - StableLM is more than just an information source, StableLM is also able to write poetry, short stories, and make jokes.
+    # - StableLM will refuse to participate in anything that could harm a human.
+    # """
+
+    # # This will wrap the default prompts that are internal to llama-index
+    # query_wrapper_prompt = PromptTemplate("<|USER|>{query_str}<|ASSISTANT|>")
+
+    # llm = HuggingFaceLLM(
+    #     context_window=4096,
+    #     max_new_tokens=256,
+    #     generate_kwargs={"temperature": 0.7, "do_sample": False},
+    #     system_prompt=system_prompt,
+    #     query_wrapper_prompt=query_wrapper_prompt,
+    #     tokenizer_name="StabilityAI/stablelm-tuned-alpha-3b",
+    #     model_name="StabilityAI/stablelm-tuned-alpha-3b",
+    #     device_map="auto",
+    #     stopping_ids=[50278, 50279, 50277, 1, 0],
+    #     tokenizer_kwargs={"max_length": 4096},
+    #     # offload="offload",
+    #     # uncomment this if using CUDA to reduce memory usage
+    #     model_kwargs={"torch_dtype": torch.float16}
+        
+    # )
+
     llm = HuggingFaceLLM(
-        context_window=2048,
-        max_new_tokens=256,
-        generate_kwargs={"temperature": 0.25, "do_sample": False},
-        query_wrapper_prompt=query_wrapper_prompt,
-        tokenizer_name="Writer/camel-5b-hf",
-        model_name="Writer/camel-5b-hf",
+        model_name="HuggingFaceH4/zephyr-7b-beta",
+        tokenizer_name="HuggingFaceH4/zephyr-7b-beta",
+        query_wrapper_prompt=PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n"),
+        context_window=5000,
+        max_new_tokens=512,
+        # model_kwargs={"quantization_config": quantization_config},
+        # tokenizer_kwargs={},
+        generate_kwargs={"temperature": 0.5, "top_k": 50, "top_p": 0.95},
+        messages_to_prompt=messages_to_prompt,
         device_map="auto",
-        tokenizer_kwargs={"max_length": 2048},
-        # offload_folder="offload",
-        # uncomment this if using CUDA to reduce memory usage
-        model_kwargs={"torch_dtype": torch.float16}
     )
 
     # llm = OpenAI(
@@ -257,10 +295,11 @@ def get_tool_service_context(
         callback_manager=callback_manager,
     )
     service_context = ServiceContext.from_defaults(
-        chunk_size=512,
+        # chunk_size=512,
         callback_manager=callback_manager,
         llm=llm,
         # embed_model=embedding_model,
+        embed_model="local:BAAI/bge-small-en-v1.5",
         node_parser=node_parser,
     )
     return service_context
@@ -337,24 +376,43 @@ Any questions about company-related financials or other metrics should be asked 
         ),
     ]
     
-    query_wrapper_prompt = PromptTemplate(
-        "Below is an instruction that describes a task. "
-        "Write a response that appropriately completes the request.\n\n"
-        "### Instruction:\n{query_str}\n\n### Response:"
-    )
+    # system_prompt = """<|SYSTEM|># StableLM Tuned (Alpha version)
+    # - StableLM is a helpful and harmless open-source AI language model developed by StabilityAI.
+    # - StableLM is excited to be able to help the user, but will refuse to do anything that could be considered harmful to the user.
+    # - StableLM is more than just an information source, StableLM is also able to write poetry, short stories, and make jokes.
+    # - StableLM will refuse to participate in anything that could harm a human.
+    # """
+
+    # # This will wrap the default prompts that are internal to llama-index
+    # query_wrapper_prompt = PromptTemplate("<|USER|>{query_str}<|ASSISTANT|>")
+
+    # chat_llm = HuggingFaceLLM(
+    #     context_window=4096,
+    #     max_new_tokens=256,
+    #     generate_kwargs={"temperature": 0.7, "do_sample": False},
+    #     system_prompt=system_prompt,
+    #     query_wrapper_prompt=query_wrapper_prompt,
+    #     tokenizer_name="StabilityAI/stablelm-tuned-alpha-3b",
+    #     model_name="StabilityAI/stablelm-tuned-alpha-3b",
+    #     device_map="auto",
+    #     stopping_ids=[50278, 50279, 50277, 1, 0],
+    #     tokenizer_kwargs={"max_length": 4096},
+    #     offload="offload",
+    #     # uncomment this if using CUDA to reduce memory usage
+    #     # model_kwargs={"torch_dtype": torch.float16}
+    # )
 
     chat_llm = HuggingFaceLLM(
-        context_window=2048,
-        max_new_tokens=256,
-        generate_kwargs={"temperature": 0.25, "do_sample": False},
-        query_wrapper_prompt=query_wrapper_prompt,
-        tokenizer_name="Writer/camel-5b-hf",
-        model_name="Writer/camel-5b-hf",
+        model_name="HuggingFaceH4/zephyr-7b-beta",
+        tokenizer_name="HuggingFaceH4/zephyr-7b-beta",
+        query_wrapper_prompt=PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n"),
+        context_window=5000,
+        max_new_tokens=512,
+        # model_kwargs={"quantization_config": quantization_config},
+        # tokenizer_kwargs={},
+        generate_kwargs={"temperature": 0.5, "top_k": 50, "top_p": 0.95},
+        messages_to_prompt=messages_to_prompt,
         device_map="auto",
-        tokenizer_kwargs={"max_length": 2048},
-        # offload_folder="offload",
-        # uncomment this if using CUDA to reduce memory usage
-        model_kwargs={"torch_dtype": torch.float16}
     )
     
     # chat_llm = OpenAI(

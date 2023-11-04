@@ -1,17 +1,17 @@
 run:
 	echo "Running in local mode."
-	docker compose create db localstack
-	docker compose start db localstack
+	docker-compose create db localstack
+	docker-compose start db localstack
 	poetry run start
 
 run_docker:
 	echo "Running in local mode with docker."
-	docker compose up
+	docker-compose up
 
 migrate:
 	echo "Running migrations."
-	docker compose create db
-	docker compose start db
+	docker-compose create db
+	docker-compose start db
 	poetry run python -m alembic upgrade head
 	# workaround for having PGVector create its tables
 	poetry run python -m scripts.build_vector_tables
@@ -24,7 +24,7 @@ refresh_db:
 
 confirmed_refresh_db:
 	echo "Refreshing database."
-	docker compose down db
+	docker-compose down db
 	docker volume rm backend_postgres_data
 	make migrate
 
@@ -35,8 +35,8 @@ chat:
 	poetry run python -m scripts.chat_llama
 
 setup_localstack:
-	docker compose create localstack
-	docker compose start localstack
+	docker-compose create localstack
+	docker-compose start localstack
 	echo "Waiting for localstack to start..."
 	# Ping http://localhost:4566/health until we get a 200 response
 	until $$(curl --output /dev/null --silent --head --fail http://localhost:4566/health); do \
@@ -80,7 +80,7 @@ seed_db_preview:
 
 seed_db_local:
 	echo "Seeding database for local."
-	docker compose create db
-	docker compose start db
+	docker-compose create db
+	docker-compose start db
 	make setup_localstack
 	python scripts/seed_db.py --ciks '["0001018724", "1326801"]'  --filing_types '["10-K"]'
