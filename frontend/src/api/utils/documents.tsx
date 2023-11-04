@@ -7,6 +7,7 @@ import _ from "lodash";
 export const fromBackendDocumentToFrontend = (
   backendDocuments: BackendDocument[]
 ) => {
+  // sort by created_at so that de-dupe filter later keeps oldest duplicate docs
   backendDocuments = _.sortBy(backendDocuments, 'created_at');
   let frontendDocs: SecDocument[] = backendDocuments
   .filter((backendDoc) => 'sec_document' in backendDoc.metadata_map)
@@ -31,6 +32,8 @@ export const fromBackendDocumentToFrontend = (
     } as SecDocument;
   });
   // de-dupe hotfix
-  frontendDocs = _.uniqBy(frontendDocs, (doc) => `${doc.ticker}-${doc.year}-${doc.quarter || ''}`)
+  const getDocDeDupeKey = (doc: SecDocument) => `${doc.ticker}-${doc.year}-${doc.quarter || ''}`;
+  frontendDocs = _.chain(frontendDocs).sortBy(getDocDeDupeKey).sortedUniqBy(getDocDeDupeKey).value();
+
   return frontendDocs;
 };
