@@ -19,8 +19,8 @@ from cachetools import cached, TTLCache
 from llama_index.readers.file.docs_reader import PDFReader
 from llama_index.schema import Document as LlamaIndexDocument
 from llama_index.agent import OpenAIAgent
+# from llama_index.llms import ChatMessage, OpenAI
 from llama_index.llms import ChatMessage, HuggingFaceLLM
-# from llama_index.llms import HuggingFaceLLM
 from llama_index.embeddings.openai import (
     OpenAIEmbedding,
     OpenAIEmbeddingMode,
@@ -55,9 +55,8 @@ from app.chat.tools import get_api_query_engine_tool
 from app.chat.utils import build_title_for_document
 from app.chat.pg_vector import get_vector_store_singleton
 from app.chat.qa_response_synth import get_custom_response_synth
-
 import torch
-
+from llama_index.prompts import PromptTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -215,51 +214,25 @@ def get_tool_service_context(
     callback_handlers: List[BaseCallbackHandler],
 ) -> ServiceContext:
     
-    # llm = HuggingFaceLLM(
-    #     model_name="HuggingFaceH4/zephyr-7b-beta",
-    #     tokenizer_name="HuggingFaceH4/zephyr-7b-beta",
-    #     # query_wrapper_prompt=PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n"),
-    #     context_window=5000,
-    #     max_new_tokens=512,
-    #     # model_kwargs={"quantization_config": quantization_config},
-    #     # tokenizer_kwargs={},
-    #     generate_kwargs={"temperature": 0.5, "top_k": 50, "top_p": 0.95},
-    #     # messages_to_prompt=messages_to_prompt,
-    #     device_map="auto",
-    # )
-
-    # llm = HuggingFaceLLM(
-    #     context_window=4096,
-    #     max_new_tokens=256,
-    #     generate_kwargs={"temperature": 0, "do_sample": False},
-    #     tokenizer_name="StabilityAI/stablelm-tuned-alpha-3b",
-    #     model_name="StabilityAI/stablelm-tuned-alpha-3b",
-    #     device_map="auto",
-    #     stopping_ids=[50278, 50279, 50277, 1, 0],
-    #     tokenizer_kwargs={"max_length": 4096},
-    #     # uncomment this if using CUDA to reduce memory usage
-    #     # model_kwargs={"torch_dtype": torch.float16}
-    # )
-
-    LLAMA2_7B = "meta-llama/Llama-2-7b-hf"
-    LLAMA2_7B_CHAT = "meta-llama/Llama-2-7b-chat-hf"
-    LLAMA2_13B = "meta-llama/Llama-2-13b-hf"
-    LLAMA2_13B_CHAT = "meta-llama/Llama-2-13b-chat-hf"
-    LLAMA2_70B = "meta-llama/Llama-2-70b-hf"
-    LLAMA2_70B_CHAT = "meta-llama/Llama-2-70b-chat-hf"
-
-    llm = HuggingFaceLLM(
-        context_window=5000,
-        max_new_tokens=512,
-        generate_kwargs={"temperature": 0, "top_k": 50, "top_p": 0.95},
-        # query_wrapper_prompt=query_wrapper_prompt,
-        tokenizer_name="HuggingFaceH4/zephyr-7b-beta",
-        model_name="HuggingFaceH4/zephyr-7b-beta",
-        # device_map="auto",
-        # change these settings below depending on your GPU
-        # model_kwargs={"torch_dtype": torch.float16},
+    query_wrapper_prompt = PromptTemplate(
+        "Below is an instruction that describes a task. "
+        "Write a response that appropriately completes the request.\n\n"
+        "### Instruction:\n{query_str}\n\n### Response:"
     )
-
+    
+    llm = HuggingFaceLLM(
+        context_window=2048,
+        max_new_tokens=256,
+        generate_kwargs={"temperature": 0.25, "do_sample": False},
+        query_wrapper_prompt=query_wrapper_prompt,
+        tokenizer_name="Writer/camel-5b-hf",
+        model_name="Writer/camel-5b-hf",
+        device_map="auto",
+        tokenizer_kwargs={"max_length": 2048},
+        # offload_folder="offload",
+        # uncomment this if using CUDA to reduce memory usage
+        model_kwargs={"torch_dtype": torch.float16}
+    )
 
     # llm = OpenAI(
     #     temperature=0,
@@ -284,9 +257,10 @@ def get_tool_service_context(
         callback_manager=callback_manager,
     )
     service_context = ServiceContext.from_defaults(
+        chunk_size=512,
         callback_manager=callback_manager,
         llm=llm,
-        embed_model="local:BAAI/bge-small-en-v1.5",
+        # embed_model=embedding_model,
         node_parser=node_parser,
     )
     return service_context
@@ -362,18 +336,35 @@ Any questions about company-related financials or other metrics should be asked 
             ),
         ),
     ]
+    
+    query_wrapper_prompt = PromptTemplate(
+        "Below is an instruction that describes a task. "
+        "Write a response that appropriately completes the request.\n\n"
+        "### Instruction:\n{query_str}\n\n### Response:"
+    )
 
     chat_llm = HuggingFaceLLM(
-        context_window=5000,
-        max_new_tokens=512,
-        generate_kwargs={"temperature": 0, "top_k": 50, "top_p": 0.95},
-        # query_wrapper_prompt=query_wrapper_prompt,
-        tokenizer_name="HuggingFaceH4/zephyr-7b-beta",
-        model_name="HuggingFaceH4/zephyr-7b-beta",
-        # device_map="auto",
-        # change these settings below depending on your GPU
-        # model_kwargs={"torch_dtype": torch.float16},
+        context_window=2048,
+        max_new_tokens=256,
+        generate_kwargs={"temperature": 0.25, "do_sample": False},
+        query_wrapper_prompt=query_wrapper_prompt,
+        tokenizer_name="Writer/camel-5b-hf",
+        model_name="Writer/camel-5b-hf",
+        device_map="auto",
+        tokenizer_kwargs={"max_length": 2048},
+        # offload_folder="offload",
+        # uncomment this if using CUDA to reduce memory usage
+        model_kwargs={"torch_dtype": torch.float16}
     )
+    
+    # chat_llm = OpenAI(
+    #     temperature=0,
+    #     model="gpt-3.5-turbo-0613",
+    #     streaming=True,
+    #     api_key=settings.OPENAI_API_KEY,
+    #     additional_kwargs={"api_key": settings.OPENAI_API_KEY},
+    # )
+    
     chat_messages: List[MessageSchema] = conversation.messages
     chat_history = get_chat_history(chat_messages)
     logger.debug("Chat history: %s", chat_history)
