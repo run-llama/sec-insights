@@ -55,5 +55,6 @@ Answer:
         service_context,
         refine_template=refine_prompt,
         text_qa_template=qa_prompt,
+        # only useful for gpt-3.5
         structured_answer_filtering=False,
     )
