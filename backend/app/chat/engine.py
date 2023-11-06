@@ -213,7 +213,7 @@ def get_tool_service_context(
 ) -> ServiceContext:
     llm = OpenAI(
         temperature=0,
-        model="gpt-3.5-turbo-0613",
+        model="gpt-4-1106-preview",
         streaming=False,
         api_key=settings.OPENAI_API_KEY,
         additional_kwargs={"api_key": settings.OPENAI_API_KEY},
@@ -312,7 +312,7 @@ Any questions about company-related financials or other metrics should be asked 
 
     chat_llm = OpenAI(
         temperature=0,
-        model="gpt-3.5-turbo-0613",
+        model="gpt-4-1106-preview",
         streaming=True,
         api_key=settings.OPENAI_API_KEY,
         additional_kwargs={"api_key": settings.OPENAI_API_KEY},
