@@ -55,5 +55,5 @@ Answer:
         service_context,
         refine_template=refine_prompt,
         text_qa_template=qa_prompt,
-        structured_answer_filtering=True,
+        structured_answer_filtering=False,
     )
