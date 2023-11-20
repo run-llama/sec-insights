@@ -25,7 +25,7 @@ fsspec = "^2023.6.0"
 pdfkit = "^1.0.0"
 pgvector = "^0.1.8"
 sentry-sdk = {extras = ["fastapi"], version = "^1.28.1"}
-llama-index = "0.8.55"
+llama-index = "0.9.3.post1"
 polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
