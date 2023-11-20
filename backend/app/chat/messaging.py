@@ -112,7 +112,7 @@ class ChatCallbackHandler(BaseCallbackHandler):
                 )
             )
         except ClosedResourceError:
-            logger.exception("Tried sending SubProcess event after channel was closed")
+            logger.exception("Tried sending SubProcess event %s after channel was closed", f"(source={source})")
 
     def start_trace(self, trace_id: Optional[str] = None) -> None:
         """No-op."""
