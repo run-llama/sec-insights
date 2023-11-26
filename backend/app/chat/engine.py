@@ -34,7 +34,7 @@ from llama_index.vector_stores.types import (
     MetadataFilters,
     ExactMatchFilter,
 )
-from llama_index.node_parser.simple import SimpleNodeParser
+from llama_index.node_parser import SentenceSplitter
 from app.core.config import settings
 from app.schema import (
     Message as MessageSchema,
@@ -61,6 +61,9 @@ logger = logging.getLogger(__name__)
 
 logger.info("Applying nested asyncio patch")
 nest_asyncio.apply()
+
+OPENAI_TOOL_LLM_NAME = "gpt-3.5-turbo-0613"
+OPENAI_CHAT_LLM_NAME = "gpt-3.5-turbo-0613"
 
 
 def get_s3_fs() -> AsyncFileSystem:
@@ -213,10 +216,9 @@ def get_tool_service_context(
 ) -> ServiceContext:
     llm = OpenAI(
         temperature=0,
-        model="gpt-4-1106-preview",
+        model=OPENAI_TOOL_LLM_NAME,
         streaming=False,
         api_key=settings.OPENAI_API_KEY,
-        additional_kwargs={"api_key": settings.OPENAI_API_KEY},
     )
     callback_manager = CallbackManager(callback_handlers)
     embedding_model = OpenAIEmbedding(
@@ -225,7 +227,7 @@ def get_tool_service_context(
         api_key=settings.OPENAI_API_KEY,
     )
     # Use a smaller chunk size to retrieve more granular results
-    node_parser = SimpleNodeParser.from_defaults(
+    node_parser = SentenceSplitter.from_defaults(
         chunk_size=NODE_PARSER_CHUNK_SIZE,
         chunk_overlap=NODE_PARSER_CHUNK_OVERLAP,
         callback_manager=callback_manager,
@@ -312,10 +314,9 @@ Any questions about company-related financials or other metrics should be asked 
 
     chat_llm = OpenAI(
         temperature=0,
-        model="gpt-4-1106-preview",
+        model=OPENAI_CHAT_LLM_NAME,
         streaming=True,
         api_key=settings.OPENAI_API_KEY,
-        additional_kwargs={"api_key": settings.OPENAI_API_KEY},
     )
     chat_messages: List[MessageSchema] = conversation.messages
     chat_history = get_chat_history(chat_messages)
