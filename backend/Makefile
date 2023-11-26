@@ -52,7 +52,6 @@ setup_localstack:
 	echo "<html>LocalStack S3 bucket website is alive</html>" > /tmp/index.html
 	awslocal s3 cp /tmp/index.html s3://${S3_ASSET_BUCKET_NAME}/index.html
 	rm /tmp/index.html
-	awslocal s3api put-bucket-policy --bucket ${S3_ASSET_BUCKET_NAME} --policy file://localstack_bucket_policy.json
 	awslocal s3 website s3://${S3_ASSET_BUCKET_NAME}/ --index-document index.html
 	awslocal s3api put-bucket-cors --bucket ${S3_ASSET_BUCKET_NAME} --cors-configuration file://./localstack-cors-config.json
 	echo "LocalStack S3 bucket website is ready. Open http://${S3_ASSET_BUCKET_NAME}.s3-website.localhost.localstack.cloud:4566 in your browser to verify."
