@@ -219,7 +219,6 @@ def get_tool_service_context(
         model=OPENAI_TOOL_LLM_NAME,
         streaming=False,
         api_key=settings.OPENAI_API_KEY,
-        additional_kwargs={"api_key": settings.OPENAI_API_KEY},
     )
     callback_manager = CallbackManager(callback_handlers)
     embedding_model = OpenAIEmbedding(
@@ -318,7 +317,6 @@ Any questions about company-related financials or other metrics should be asked 
         model=OPENAI_CHAT_LLM_NAME,
         streaming=True,
         api_key=settings.OPENAI_API_KEY,
-        additional_kwargs={"api_key": settings.OPENAI_API_KEY},
     )
     chat_messages: List[MessageSchema] = conversation.messages
     chat_history = get_chat_history(chat_messages)

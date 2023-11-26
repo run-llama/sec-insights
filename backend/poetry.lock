@@ -999,20 +999,20 @@ files = [
 
 [[package]]
 name = "llama-index"
-version = "0.9.3.post1"
+version = "0.9.7"
 description = "Interface between LLMs and your data"
 optional = false
 python-versions = ">=3.8.1,<3.12"
 files = [
-    {file = "llama_index-0.9.3.post1-py3-none-any.whl", hash = "sha256:53dd23e9d2dda0a643ce2dac83006d5431a904f30782bd0361339e81c5fd9e57"},
-    {file = "llama_index-0.9.3.post1.tar.gz", hash = "sha256:d229479ae66e9b8d58d2d38f7be665da3f41ceb4746dd1e21df634522da1fcd6"},
+    {file = "llama_index-0.9.7-py3-none-any.whl", hash = "sha256:034b8f910c41077f57c20c1d3ebb97d44d4ef2ce03bcadfd7db1e1f8d70d4854"},
+    {file = "llama_index-0.9.7.tar.gz", hash = "sha256:ce0d0ddf318087c9db6dfd17114515d5ea23efebdd2c4f4d565dfca43f0825d4"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.6,<4.0.0"
 aiostream = ">=0.5.2,<0.6.0"
 beautifulsoup4 = ">=4.12.2,<5.0.0"
-dataclasses-json = ">=0.5.7,<0.6.0"
+dataclasses-json = "*"
 deprecated = ">=1.2.9.3"
 fsspec = ">=2023.5.0"
 httpx = "*"
@@ -1020,13 +1020,13 @@ nest-asyncio = ">=1.5.8,<2.0.0"
 nltk = ">=3.8.1,<4.0.0"
 numpy = "*"
 openai = ">=1.1.0"
-pandas = {version = "*", extras = ["jinja2"]}
+pandas = "*"
+requests = ">=2.31.0"
 SQLAlchemy = {version = ">=1.4.49", extras = ["asyncio"]}
 tenacity = ">=8.2.0,<9.0.0"
 tiktoken = ">=0.3.3"
 typing-extensions = ">=4.5.0"
 typing-inspect = ">=0.8.0"
-urllib3 = "<2"
 
 [package.extras]
 langchain = ["langchain (>=0.0.303)"]
@@ -2682,4 +2682,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10,<3.12"
-content-hash = "eac65e2ae3738cdd1532be5b3d323b7941a674fa3002ec50716ff2c208bd7125"
+content-hash = "bbc26c431b06304f54f6786ceb23cd4033a7a6daf3a926c83b1128e4eb489048"
