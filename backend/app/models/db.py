@@ -46,7 +46,7 @@ class Document(Base):
     # URL to the actual document (e.g. a PDF)
     url = Column(String, nullable=False, unique=True)
     metadata_map = Column(JSONB, nullable=True)
-    conversations = relationship("ConversationDocument", back_populates="document")
+    conversations = relationship("ConversationDocument", back_populates="document", cascade="all, delete", passive_deletes=True)
 
 
 class Conversation(Base):
@@ -54,9 +54,9 @@ class Conversation(Base):
     A conversation with messages and linked documents
     """
 
-    messages = relationship("Message", back_populates="conversation")
+    messages = relationship("Message", back_populates="conversation", cascade="all, delete", passive_deletes=True,)
     conversation_documents = relationship(
-        "ConversationDocument", back_populates="conversation"
+        "ConversationDocument", back_populates="conversation", cascade="all, delete", passive_deletes=True,
     )
 
 
@@ -66,9 +66,9 @@ class ConversationDocument(Base):
     """
 
     conversation_id = Column(
-        UUID(as_uuid=True), ForeignKey("conversation.id"), index=True
+        UUID(as_uuid=True), ForeignKey("conversation.id", ondelete="CASCADE"), index=True
     )
-    document_id = Column(UUID(as_uuid=True), ForeignKey("document.id"), index=True)
+    document_id = Column(UUID(as_uuid=True), ForeignKey("document.id", ondelete="CASCADE"), index=True)
     conversation = relationship("Conversation", back_populates="conversation_documents")
     document = relationship("Document", back_populates="conversations")
 
@@ -79,13 +79,13 @@ class Message(Base):
     """
 
     conversation_id = Column(
-        UUID(as_uuid=True), ForeignKey("conversation.id"), index=True
+        UUID(as_uuid=True), ForeignKey("conversation.id", ondelete="CASCADE"), index=True
     )
     content = Column(String)
     role = Column(to_pg_enum(MessageRoleEnum))
     status = Column(to_pg_enum(MessageStatusEnum), default=MessageStatusEnum.PENDING)
     conversation = relationship("Conversation", back_populates="messages")
-    sub_processes = relationship("MessageSubProcess", back_populates="message")
+    sub_processes = relationship("MessageSubProcess", back_populates="message", cascade="all, delete", passive_deletes=True)
 
 
 class MessageSubProcess(Base):
@@ -93,7 +93,7 @@ class MessageSubProcess(Base):
     A record of a sub-process that occurred as part of the generation of a message from an AI assistant
     """
 
-    message_id = Column(UUID(as_uuid=True), ForeignKey("message.id"), index=True)
+    message_id = Column(UUID(as_uuid=True), ForeignKey("message.id", ondelete="CASCADE"), index=True)
     source = Column(to_pg_enum(MessageSubProcessSourceEnum))
     message = relationship("Message", back_populates="sub_processes")
     status = Column(
