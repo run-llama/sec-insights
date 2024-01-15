@@ -39,7 +39,7 @@ setup_localstack:
 	docker compose start localstack
 	echo "Waiting for localstack to start..."
 	# Ping http://localhost:4566/health until we get a 200 response
-	until $$(curl --output /dev/null --silent --head --fail http://localhost:4566/health); do \
+	until $$(curl --output /dev/null --silent --head --fail http://localhost:4566/_localstack/health); do \
 		printf '.'; \
 		sleep 0.5; \
 	done
