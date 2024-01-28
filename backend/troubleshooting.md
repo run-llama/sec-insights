@@ -32,3 +32,21 @@ You can remedy this quickly by doing the following:
 1. `set -a`
 1. `source .env`
 
+
+
+## "Warning: Blocked access to file"
+
+Results from a breaking change in the pdfkit library which now requires an additional
+options configuraiton to enable local file access:
+
+[See Related StackOverflow](https://stackoverflow.com/questions/62814607/pdfkit-warning-blocked-access-to-file)
+
+```python
+options = {
+   "enable-local-file-access": None
+}
+try:
+   pdfkit.from_file(input_path, output_path, verbose=True, options=options)
+except Exception as e:
+   print(f"Error converting {input_path} to {output_path}: {e}")
+```

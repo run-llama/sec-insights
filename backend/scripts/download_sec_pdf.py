@@ -68,6 +68,8 @@ def _convert_to_pdf(output_dir: str):
 
     data_dir = Path(output_dir) / "sec-edgar-filings"
 
+
+
     for cik_dir in data_dir.iterdir():
         for filing_type_dir in cik_dir.iterdir():
             for filing_dir in filing_type_dir.iterdir():
@@ -77,8 +79,11 @@ def _convert_to_pdf(output_dir: str):
                     print("- Converting {}".format(filing_doc))
                     input_path = str(filing_doc.absolute())
                     output_path = str(filing_pdf.absolute())
+                    options = {
+                        "enable-local-file-access": None
+                    }
                     try:
-                        pdfkit.from_file(input_path, output_path, verbose=True)
+                        pdfkit.from_file(input_path, output_path, verbose=True, options=options)
                     except Exception as e:
                         print(f"Error converting {input_path} to {output_path}: {e}")
 
@@ -114,7 +119,7 @@ def main(
             )
 
     if convert_to_pdf:
-        print("Converting html files to pdf files")
+        print("Converting html files inside [{output_dir}] to pdf files")
         _convert_to_pdf(output_dir)
 
 

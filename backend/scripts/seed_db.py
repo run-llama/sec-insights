@@ -9,6 +9,7 @@ import upsert_db_sec_documents
 import download_sec_pdf
 from download_sec_pdf import DEFAULT_CIKS, DEFAULT_FILING_TYPES
 import seed_storage_context
+import os
 
 
 def copy_to_s3(dir_path: str, s3_bucket: str = settings.S3_ASSET_BUCKET_NAME):
@@ -24,6 +25,7 @@ def copy_to_s3(dir_path: str, s3_bucket: str = settings.S3_ASSET_BUCKET_NAME):
     if not (settings.RENDER or s3.exists(s3_bucket)):
         s3.mkdir(s3_bucket)
 
+    print(f"Recursive Copy into S3 From: {dir_path} To: {s3_bucket}")
     s3.put(dir_path, s3_bucket, recursive=True)
 
 
@@ -31,6 +33,9 @@ async def async_seed_db(
     ciks: List[str] = DEFAULT_CIKS, filing_types: List[str] = DEFAULT_FILING_TYPES
 ):
     with TemporaryDirectory() as temp_dir:
+        print("Populating XDG_RUNTIME_DIR env var to point to temp directory where files are downloaded")
+        os.environ["XDG_RUNTIME_DIR"] = temp_dir
+
         print("Downloading SEC filings")
         download_sec_pdf.main(
             output_dir=temp_dir,
@@ -38,13 +43,17 @@ async def async_seed_db(
             file_types=filing_types,
         )
 
+        filings_dir = str(Path(temp_dir) / "sec-edgar-filings")
+
+        print(f"List Dir: {os.listdir(filings_dir)}")
+
         print("Copying downloaded SEC filings to S3")
-        copy_to_s3(str(Path(temp_dir) / "sec-edgar-filings"))
+        copy_to_s3(filings_dir)
 
         print("Upserting records of downloaded SEC filings into database")
         await upsert_db_sec_documents.async_upsert_documents_from_filings(
             url_base=settings.CDN_BASE_URL,
-            doc_dir=temp_dir,
+            doc_dir=temp_dir, # might need to append "sec-edgar-filings" here ?
         )
 
         print("Seeding storage context")
