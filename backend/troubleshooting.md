@@ -50,3 +50,12 @@ try:
 except Exception as e:
    print(f"Error converting {input_path} to {output_path}: {e}")
 ```
+
+## OpenAI Rate Limit
+
+When running: make seed_db_local
+
+```bash
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+make: *** [Makefile:86: seed_db_local] Error 1
+```

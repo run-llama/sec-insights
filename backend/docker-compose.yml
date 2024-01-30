@@ -15,7 +15,7 @@ services:
       - .env
       - .env.docker
     environment:
-      BACKEND_CORS_ORIGINS: '["http://localhost", "http://localhost:8000"]'
+      BACKEND_CORS_ORIGINS: '["http://localhost", "http://localhost:3000", "http://localhost:8000"]'
 
   db:
     image: ankane/pgvector:v0.5.0
@@ -23,6 +23,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: llama_app_db
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
