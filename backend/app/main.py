@@ -43,23 +43,23 @@ def __setup_logging(log_level: str):
     logger.info("Set up logging with log level %s", log_level)
 
 
-def __setup_sentry():
-    if settings.SENTRY_DSN:
-        logger.info("Setting up Sentry")
-        if settings.ENVIRONMENT == AppEnvironment.PRODUCTION:
-            profiles_sample_rate = None
-        else:
-            profiles_sample_rate = settings.SENTRY_SAMPLE_RATE
-        sentry_sdk.init(
-            dsn=settings.SENTRY_DSN,
-            environment=settings.ENVIRONMENT.value,
-            release=settings.RENDER_GIT_COMMIT,
-            debug=settings.VERBOSE,
-            traces_sample_rate=settings.SENTRY_SAMPLE_RATE,
-            profiles_sample_rate=profiles_sample_rate,
-        )
-    else:
-        logger.info("Skipping Sentry setup")
+# def __setup_sentry():
+#     if settings.SENTRY_DSN:
+#         logger.info("Setting up Sentry")
+#         if settings.ENVIRONMENT == AppEnvironment.PRODUCTION:
+#             profiles_sample_rate = None
+#         else:
+#             profiles_sample_rate = settings.SENTRY_SAMPLE_RATE
+#         sentry_sdk.init(
+#             dsn=settings.SENTRY_DSN,
+#             environment=settings.ENVIRONMENT.value,
+#             release=settings.RENDER_GIT_COMMIT,
+#             debug=settings.VERBOSE,
+#             traces_sample_rate=settings.SENTRY_SAMPLE_RATE,
+#             profiles_sample_rate=profiles_sample_rate,
+#         )
+#     else:
+#         logger.info("Skipping Sentry setup")
 
 
 @asynccontextmanager
@@ -123,7 +123,7 @@ app.mount(f"/{settings.LOADER_IO_VERIFICATION_STR}", loader_io_router)
 def start():
     print("Running in AppEnvironment: " + settings.ENVIRONMENT.value)
     __setup_logging(settings.LOG_LEVEL)
-    __setup_sentry()
+    # __setup_sentry()
     """Launched with `poetry run start` at root level"""
     if settings.RENDER:
         # on render.com deployments, run migrations
