@@ -36,7 +36,10 @@ async def async_seed_db(
         print("Populating XDG_RUNTIME_DIR env var to point to temp directory where files are downloaded")
         os.environ["XDG_RUNTIME_DIR"] = temp_dir
 
-        print("Downloading SEC filings")
+        # Replace temp dir with known local dir for testing purposes
+        temp_dir = "/workspaces/sec-insights/backend/files"
+        
+        print("Downloading SEC filings to {temp_dir}")
         download_sec_pdf.main(
             output_dir=temp_dir,
             ciks=ciks,
