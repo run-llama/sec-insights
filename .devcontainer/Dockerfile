@@ -24,7 +24,7 @@ ENV YOUR_ENV=${YOUR_ENV} \
   PIP_DEFAULT_TIMEOUT=100 \
   # Poetry's configuration: (plus POETRY_VERSION)
   POETRY_NO_INTERACTION=1 \
-  # POETRY_VIRTUALENVS_CREATE=false \
+  POETRY_VIRTUALENVS_CREATE=false \
   POETRY_CACHE_DIR='/var/cache/pypoetry' \
   POETRY_HOME='/usr/local'
 
