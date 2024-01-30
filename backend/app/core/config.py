@@ -1,11 +1,12 @@
 import os
 from enum import Enum
 from typing import List, Union, Optional
-from pydantic import BaseSettings, AnyHttpUrl, EmailStr, validator
+from pydantic import  AnyHttpUrl, EmailStr, validator
+from pydantic_settings import BaseSettings
 from multiprocessing import cpu_count
 
 
-class AppConfig(BaseSettings.Config):
+class AppConfig(BaseSettings):
     """
     Config for settings classes that allows for
     combining Setings classes with different env_prefix settings.
@@ -14,7 +15,7 @@ class AppConfig(BaseSettings.Config):
     https://github.com/pydantic/pydantic/issues/1727#issuecomment-658881926
     """
 
-    case_sensitive = True
+    case_sensitive:bool = True
 
     @classmethod
     def prepare_field(cls, field) -> None:
@@ -56,7 +57,7 @@ class PreviewPrefixedSettings(BaseSettings):
     POLYGON_IO_API_KEY: str
 
     class Config(AppConfig):
-        env_prefix = "PREVIEW_" if is_pull_request or is_preview_env else ""
+        env_prefix:str = "PREVIEW_" if is_pull_request or is_preview_env else ""
 
 
 class Settings(PreviewPrefixedSettings):
@@ -76,8 +77,8 @@ class Settings(PreviewPrefixedSettings):
     S3_ASSET_BUCKET_NAME: str
     CDN_BASE_URL: str
     VECTOR_STORE_TABLE_NAME: str = "pg_vector_store"
-    SENTRY_DSN: Optional[str]
-    RENDER_GIT_COMMIT: Optional[str]
+    # SENTRY_DSN: Optional[str]
+    # RENDER_GIT_COMMIT: Optional[str]
     LOADER_IO_VERIFICATION_STR: str = "loaderio-e51043c635e0f4656473d3570ae5d9ec"
     SEC_EDGAR_COMPANY_NAME: str = "YourOrgName"
     SEC_EDGAR_EMAIL: EmailStr = "you@example.com"
@@ -167,7 +168,7 @@ class Settings(PreviewPrefixedSettings):
         return 0.07 if self.ENVIRONMENT == AppEnvironment.PRODUCTION else 1.0
 
     class Config(AppConfig):
-        env_prefix = ""
+        env_prefix:str = ""
 
 
 settings = Settings()
