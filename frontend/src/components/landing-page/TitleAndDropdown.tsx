@@ -75,12 +75,15 @@ export const TitleAndDropdown = () => {
       <div className="absolute right-4 top-4">
         <a href="https://www.llamaindex.ai/" target="_blank">
           <button className="flex items-center justify-center font-nunito text-lg font-bold ">
-            Built by LlamaIndex
+            <span>Built by LlamaIndex...</span><br /><span>Hosted by Accelerated Innovation</span>
             <img src="logo-black.svg" className="mx-2 rounded-lg" width={40} />
           </button>
         </a>
       </div>
       <div className="mt-28 flex flex-col items-center">
+        <div className="w-4/5 text-center text-4xl">
+          <img src="ai_logo_square.png" alt="Accelerated Innovations Logo Square" />
+        </div>
         <div className="w-4/5 text-center text-4xl">
           Empower your organization&apos;s Business Intelligence with{" "}
           <span className="font-bold">SEC Insights </span>
@@ -92,7 +95,7 @@ export const TitleAndDropdown = () => {
           </div>
         </div>
         <div className="mt-4 flex items-center justify-center">
-          <GitHubButton href="https://github.com/run-llama/sec-insights">Open-Sourced on Github</GitHubButton>
+          <GitHubButton href="https://github.com/perry-birch/sec-insights">Open-Sourced Fork on Github</GitHubButton>
         </div>
       </div>
       {isMobile ? (
