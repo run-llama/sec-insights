@@ -78,7 +78,10 @@ def _convert_to_pdf(output_dir: str):
                     input_path = str(filing_doc.absolute())
                     output_path = str(filing_pdf.absolute())
                     try:
-                        pdfkit.from_file(input_path, output_path, verbose=True)
+                        # fix for issue here:
+                        # https://github.com/wkhtmltopdf/wkhtmltopdf/issues/4460#issuecomment-661345113
+                        options = {'enable-local-file-access': None}
+                        pdfkit.from_file(input_path, output_path, options=options, verbose=True)
                     except Exception as e:
                         print(f"Error converting {input_path} to {output_path}: {e}")
 
