@@ -9,7 +9,8 @@
                 "HEAD"
             ],
             "AllowedOrigins": [
-                "*"
+                "*",
+                "https://studious-winner-5499gp9xvj634wqw-4566.app.github.dev"           
             ],
             "ExposeHeaders": [
                 "ETag"

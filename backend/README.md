@@ -9,6 +9,7 @@ Live at https://secinsights.ai/
 #安装依赖项目
 1. Run `poetry shell`
 1. Run `poetry install` to install dependencies for the project
+#在设置环境变量时创建和使用 .env 文件
 1. Create the `.env` file and source it. The `.env.development` file is a good template.
     1. `cp .env.development .env`
     1. `set -a`
