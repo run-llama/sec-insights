@@ -6,6 +6,7 @@ Live at https://secinsights.ai/
     * This step can be skipped if you're running from the devcontainer image in Github Codespaces
 1. [Install docker](https://docs.docker.com/engine/install/)
     * This step can be skipped if you're running from the devcontainer image in Github Codespaces
+#安装依赖项目
 1. Run `poetry shell`
 1. Run `poetry install` to install dependencies for the project
 1. Create the `.env` file and source it. The `.env.development` file is a good template.
