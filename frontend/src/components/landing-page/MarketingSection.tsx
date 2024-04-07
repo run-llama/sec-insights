@@ -24,7 +24,7 @@ export const MarketingSection = () => {
             E-Counsel presents
           </div>
           <div className="w-3/4 text-center font-lora text-4xl font-bold">
-            The next step in analyzing complex financial documents
+            The next step in analyzing complex merger and acquisition documents
           </div>
         </div>
       </div>
