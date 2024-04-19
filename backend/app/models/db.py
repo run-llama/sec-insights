@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Enum, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID, ENUM, JSONB
 from sqlalchemy.orm import relationship
 from enum import Enum
-from llama_index.callbacks.schema import CBEventType
+from llama_index.core.callbacks import CBEventType
 from app.models.base import Base
 
 

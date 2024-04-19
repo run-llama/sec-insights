@@ -6,9 +6,9 @@ from enum import Enum
 from typing import List, Optional, Dict, Union, Any
 from uuid import UUID
 from datetime import datetime
-from llama_index.schema import BaseNode, NodeWithScore
-from llama_index.callbacks.schema import EventPayload
-from llama_index.query_engine.sub_question_query_engine import SubQuestionAnswerPair
+from llama_index.core.schema import BaseNode, NodeWithScore
+from llama_index.core.callbacks.schema import EventPayload
+from llama_index.core.query_engine.sub_question_query_engine import SubQuestionAnswerPair
 from app.models.db import (
     MessageRoleEnum,
     MessageStatusEnum,

@@ -7,31 +7,32 @@ readme = "README.md"
 packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
-python = "^3.10,<3.12"
+python = "^3.11,<3.12"
 fastapi = "0.100.1"
 pydantic = "^1.10.8"
 uvicorn = "^0.22.0"
 sqlalchemy = {extras = ["async"], version = "^2.0.15"}
 aiosqlite = "^0.19.0"
-asyncpg = "^0.27.0"
+asyncpg = "^0.29.0"
 alembic = "^1.11.1"
 psycopg2 = {extras = ["binary"], version = "^2.9.6"}
 psycopg2-binary = "^2.9.6"
 sse-starlette = "^1.6.1"
-pypdf = "^3.9.1"
+pypdf = "^4.0.1"
 anyio = "^3.7.0"
 s3fs = "^2023.6.0"
 fsspec = "^2023.6.0"
 pdfkit = "^1.0.0"
-pgvector = "^0.1.8"
+pgvector = "^0.2.4"
 sentry-sdk = {extras = ["fastapi"], version = "^1.28.1"}
-llama-index = "0.9.7"
+llama-index = "0.10.30"
 polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
 cachetools = "^5.3.1"
 greenlet = "^2.0.2"
 email-validator = "^2.0.0.post2"
+llama-index-vector-stores-postgres = "^0.1.5"
 
 
 [tool.poetry.group.dev.dependencies]

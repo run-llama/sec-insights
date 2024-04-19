@@ -1,4 +1,4 @@
-from typing import List, Iterator, cast
+from typing import List, cast
 import logging
 
 # This is from the unofficial polygon.io client: https://polygon.readthedocs.io/
@@ -13,9 +13,9 @@ from app.schema import (
     DocumentMetadataKeysEnum,
     SecDocumentMetadata,
 )
-from llama_index.tools import FunctionTool, ToolMetadata, QueryEngineTool
-from llama_index.indices.service_context import ServiceContext
-from llama_index.agent import OpenAIAgent
+from llama_index.core.tools import FunctionTool, ToolMetadata, QueryEngineTool
+from llama_index.core.indices.service_context import ServiceContext
+from llama_index.agent.openai import OpenAIAgent
 from app.core.config import settings
 from app.chat.utils import build_title_for_document
 
