@@ -102,6 +102,11 @@ def get_polygon_io_sec_tool(document: DocumentSchema) -> FunctionTool:
                 max_connections=20,
                 use_async=True,
             )
+            # 指定 polygon.io API 代理地址
+            import os
+            polygon_api_base = os.environ.get("POLYGON_API_BASE")
+            if polygon_api_base is not None:
+                client.BASE=polygon_api_base
             client = cast(AsyncReferenceClient, client)
             response_dict = await client.get_stock_financials_vx(
                 ticker=sec_metadata.company_ticker,
