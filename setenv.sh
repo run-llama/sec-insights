@@ -7,5 +7,5 @@ export EXINIT="set exrc nu ai sm ts=4 sw=4 laststatus=0 foldmethod=indent
 set -o vi
 
 set -a
-source /workspaces/sec-insights/backend/.env
-. /workspaces/sec-insights/backend/.venv/bin/activate
+source ./backend/.env
+. ./backend/.venv/bin/activate
