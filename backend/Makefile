@@ -90,3 +90,4 @@ debug:
 	echo "debug in local mode."
 	docker compose create db localstack
 	docker compose start db localstack
+	make setup_localstack
