@@ -6,7 +6,7 @@
 	"configurations": [
 		
 		{
-			"name": "Python: 当前文件",
+			"name": "debug_app",
 			"type": "debugpy",
 			"request": "launch",
 			"program": "${file}",
@@ -14,6 +14,19 @@
 			"cwd": "${workspaceFolder}",
 			"env": {"PYTHONPATH":"${workspaceFolder};${env:PYTHONPATH}"},
 			// "args": ["start"],
+			// "envFile": "${workspaceFolder}/.env",
+			"justMyCode": false
+		},
+		{
+			"name": "seed_db",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+			"env": {"PYTHONPATH":"${workspaceFolder};${env:PYTHONPATH}"},
+			// "args": ["--ciks '[\"0001018724\", \"1326801\"]'  --filing_types '[\"10-K\"]'"],
+			"args": ["--ciks", "[\"0001018724\", \"1326801\"]", "--filing_types", "[\"10-K\"]"],
 			// "envFile": "${workspaceFolder}/.env",
 			"justMyCode": false
 		}
