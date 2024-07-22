@@ -100,7 +100,9 @@ class Settings(PreviewPrefixedSettings):
         Used for setting S3 endpoint URL in the s3fs module.
         When running locally, this should be set to the localstack endpoint.
         """
-        return None if self.RENDER else "http://localhost:4566"
+        return settings.CDN_BASE_URL
+
+        # return None if self.RENDER else "http://localhost:4566"
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:

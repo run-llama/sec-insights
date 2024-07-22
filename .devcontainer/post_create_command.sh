@@ -1,5 +1,6 @@
 cd backend/
 
+pip install --upgrade pip
 # install poetry dependencies
 poetry install
 

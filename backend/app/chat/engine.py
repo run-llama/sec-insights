@@ -80,21 +80,22 @@ def get_s3_fs() -> AsyncFileSystem:
 def fetch_and_read_document(
     document: DocumentSchema,
 ) -> List[LlamaIndexDocument]:
-    # Super hacky approach to get this to feature complete on time.
-    # TODO: Come up with better abstractions for this and the other methods in this module.
-    with TemporaryDirectory() as temp_dir:
-        temp_file_path = Path(temp_dir) / f"{str(document.id)}.pdf"
-        with open(temp_file_path, "wb") as temp_file:
-            with requests.get(document.url, stream=True) as r:
-                r.raise_for_status()
-                for chunk in r.iter_content(chunk_size=8192):
-                    temp_file.write(chunk)
-            temp_file.seek(0)
-            reader = PDFReader()
-            return reader.load_data(
-                temp_file_path, extra_info={DB_DOC_ID_KEY: str(document.id)}
-            )
+    s3 = get_s3_fs()
+    parsed_url = urlparse(document.url)
+    s3_path = parsed_url.path.lstrip('/')
 
+    with TemporaryDirectory() as temp_dir:
+        temp_dir_path = Path(temp_dir)
+        temp_file_path = temp_dir_path / f"{str(document.id)}.pdf"
+
+        s3.get(s3_path, str(temp_file_path))
+
+        reader = PDFReader()
+        docs = reader.load_data(
+            temp_file_path, extra_info={DB_DOC_ID_KEY: str(document.id)}
+        )
+
+        return docs
 
 def build_description_for_document(document: DocumentSchema) -> str:
     if DocumentMetadataKeysEnum.SEC_DOCUMENT in document.metadata_map:

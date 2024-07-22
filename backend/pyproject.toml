@@ -42,7 +42,7 @@ pdfkit = "^1.0.0"
 fire = "^0.5.0"
 sec-edgar-downloader = "~5.0"
 pytickersymbols = "^1.13.0"
-awscli-local = "^0.20"
+awscli-local = "^0.22.0"
 
 [tool.poetry.scripts]
 start = "app.main:start"
