@@ -14,7 +14,7 @@ from pydantic import BaseModel
 from app import schema
 from app.schema import SubProcessMetadataKeysEnum, SubProcessMetadataMap
 from app.models.db import MessageSubProcessSourceEnum
-from app.chat.engine import get_chat_engine
+from app.chat.engine import get_chat_engine, get_chat_engine_v2, get_chat_engine_v3
 
 logger = logging.getLogger(__name__)
 
@@ -131,7 +131,9 @@ async def handle_chat_message(
     send_chan: MemoryObjectSendStream,
 ) -> None:
     async with send_chan:
-        chat_engine = await get_chat_engine(
+        print("conversation: ", conversation)
+        print("send_chan: ", send_chan)
+        chat_engine = await get_chat_engine_v2(
             ChatCallbackHandler(send_chan), conversation
         )
         await send_chan.send(
@@ -147,18 +149,23 @@ Remember - if I have asked a relevant financial question, use your tools.
 
 {user_message.content}
         """.strip()
-        streaming_chat_response: StreamingAgentChatResponse = (
-            await chat_engine.astream_chat(templated_message)
-        )
         response_str = ""
-        async for text in streaming_chat_response.async_response_gen():
-            response_str += text
-            if send_chan._closed:
-                logger.debug(
-                    "Received streamed token after send channel closed. Ignoring."
-                )
-                return
-            await send_chan.send(StreamedMessage(content=response_str))
+        async for chunk in chat_engine.astream(templated_message):
+            response_str += chunk
+            await send_chan.send(StreamedMessage(content = response_str))
+        
+        # streaming_chat_response: StreamingAgentChatResponse = (
+        #     await chat_engine.astream_chat(templated_message)
+        # )
+        # response_str = ""
+        # async for text in streaming_chat_response.async_response_gen():
+        #     response_str += text
+        #     if send_chan._closed:
+        #         logger.debug(
+        #             "Received streamed token after send channel closed. Ignoring."
+        #         )
+        #         return
+        #     await send_chan.send(StreamedMessage(content=response_str))
 
         if response_str.strip() == "":
             await send_chan.send(

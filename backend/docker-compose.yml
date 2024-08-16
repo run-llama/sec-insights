@@ -1,4 +1,3 @@
-version: '3'
 services:
   llama-app-fastapi:
     build:

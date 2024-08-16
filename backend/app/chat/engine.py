@@ -341,3 +341,38 @@ Any questions about company-related financials or other metrics should be asked 
     )
 
     return chat_engine
+
+
+
+async def get_chat_engine_v3(
+    callback_handler: BaseCallbackHandler,
+    conversation: ConversationSchema,
+):
+    chat_llm = OpenAI(model="gpt-3.5-turbo-0613")
+
+    chat_engine = OpenAIAgent.from_tools(llm = chat_llm, verbose = True)
+    return chat_engine
+
+async def get_chat_engine_v2(
+    callback_handler: BaseCallbackHandler,
+    conversation: ConversationSchema,
+):
+    from langchain.chains import ConversationalRetrievalChain, LLMChain
+    from langchain_core.prompts import ChatPromptTemplate
+    from langchain_core.output_parsers import StrOutputParser
+    from langchain_core.runnables import RunnableParallel, RunnablePassthrough
+    from langchain_openai import ChatOpenAI    
+    prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+
+
+Question: {question}""")
+    
+
+    setup_and_retrieval = RunnableParallel(
+        {"question": RunnablePassthrough()}
+    )
+    llm = ChatOpenAI()
+    parser = StrOutputParser()
+    chain = setup_and_retrieval | prompt | llm | parser
+
+    return chain

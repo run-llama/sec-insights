@@ -5,9 +5,11 @@ ENV PYTHONUNBUFFERED True
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 RUN pip install poetry
-COPY . ./
 RUN apt-get update
 RUN apt-get install libpq-dev gcc build-essential wkhtmltopdf  -y
+COPY . ./
+RUN poetry add langchain
+RUN poetry add langchain_community
 RUN poetry install
 
 ARG DATABASE_URL

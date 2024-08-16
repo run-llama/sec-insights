@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List, Optional
 
 import pdfkit
-from file_utils import filing_exists
+from scripts.file_utils import filing_exists
 from fire import Fire
 from sec_edgar_downloader import Downloader
 from distutils.spawn import find_executable
