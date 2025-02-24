@@ -5,6 +5,7 @@ import sys
 import sentry_sdk
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse
 from alembic.config import Config
 import alembic.config
 from alembic import script
@@ -99,6 +100,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+@app.get("/", include_in_schema=False)
+def root_redirect():
+    """
+    Redirects the root URL to the API documentation.
+    """
+    return RedirectResponse(url="/docs/")
 
 if settings.BACKEND_CORS_ORIGINS:
     origins = settings.BACKEND_CORS_ORIGINS.copy()
