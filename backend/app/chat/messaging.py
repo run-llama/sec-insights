@@ -10,6 +10,8 @@ from llama_index.callbacks.schema import CBEventType, EventPayload
 from llama_index.query_engine.sub_question_query_engine import SubQuestionAnswerPair
 from llama_index.agent.openai_agent import StreamingAgentChatResponse
 from pydantic import BaseModel
+from guardrails import Guard
+from guardrails.hub import RestrictToTopic, ToxicLanguage
 
 from app import schema
 from app.schema import SubProcessMetadataKeysEnum, SubProcessMetadataMap
@@ -18,6 +20,13 @@ from app.chat.engine import get_chat_engine
 
 logger = logging.getLogger(__name__)
 
+guard = Guard().use_many(
+    # RestrictToTopic(
+    #     valid_topics=["AI", "Language Models"],
+    #     on_fail="exception"
+    # ),  # Keeps responses on-topic
+    ToxicLanguage(threshold=0.5, on_fail="exception")  # Blocks toxic content
+)
 
 class StreamedMessage(BaseModel):
     content: str
@@ -27,7 +36,7 @@ class StreamedMessageSubProcess(BaseModel):
     source: MessageSubProcessSourceEnum
     has_ended: bool
     event_id: str
-    metadata_map: Optional[SubProcessMetadataMap]
+    metadata_map: Optional[SubProcessMetadataMap] = None  # Explicit default
 
 
 class ChatCallbackHandler(BaseCallbackHandler):
@@ -36,9 +45,17 @@ class ChatCallbackHandler(BaseCallbackHandler):
         send_chan: MemoryObjectSendStream,
     ):
         """Initialize the base callback handler."""
-        ignored_events = [CBEventType.CHUNKING, CBEventType.NODE_PARSING]
+        # ignored_events = [CBEventType.CHUNKING, CBEventType.NODE_PARSING]
+        ignored_events = [
+            CBEventType.CHUNKING,
+            CBEventType.NODE_PARSING,
+            CBEventType.EMBEDDING,  # Ignore low-level events
+            CBEventType.RETRIEVE,
+            CBEventType.TEMPLATING,
+        ]
         super().__init__(ignored_events, ignored_events)
         self._send_chan = send_chan
+        self.response_complete = False
 
     def on_event_start(
         self,
@@ -111,6 +128,11 @@ class ChatCallbackHandler(BaseCallbackHandler):
                     has_ended=not is_start_event,
                 )
             )
+            # if event_type in [CBEventType.SYNTHESIZE, CBEventType.LLM] and not is_start_event:
+            #     self.response_complete = True
+            if event_type == CBEventType.SYNTHESIZE and not is_start_event:
+                self.response_complete = True
+                logger.debug("Synthesis complete; stopping further events")
         except ClosedResourceError:
             logger.exception("Tried sending SubProcess event %s after channel was closed", f"(source={source})")
 
@@ -151,6 +173,7 @@ Remember - if I have asked a relevant financial question, use your tools.
             await chat_engine.astream_chat(templated_message)
         )
         response_str = ""
+        response_complete = False
         async for text in streaming_chat_response.async_response_gen():
             response_str += text
             if send_chan._closed:
@@ -158,11 +181,31 @@ Remember - if I have asked a relevant financial question, use your tools.
                     "Received streamed token after send channel closed. Ignoring."
                 )
                 return
-            await send_chan.send(StreamedMessage(content=response_str))
+            try:
+                if response_str.strip():  # Only validate non-empty strings
+                    validated_content = guard.validate(response_str)
+                    await send_chan.send(StreamedMessage(content=validated_content.validated_output))
+                    response_complete = True
+                else:
+                    logger.debug("Skipping validation for empty response chunk")
+                    await send_chan.send(StreamedMessage(content=response_str))
+            except Exception as e:
+                logger.error(f"Guardrails validation failed: {str(e)}")
+                await send_chan.send(
+                    StreamedMessage(content="Sorry, the response was blocked due to validation issues.")
+                )
+                return
+            # if response_complete:
+            #     logger.debug("Response fully streamed; exiting generator")
+            #     break
+            # await send_chan.send(StreamedMessage(content=response_str))
 
-        if response_str.strip() == "":
+        if response_str.strip():
+            logger.debug("Response fully streamed; signaling completion")
+        else:
             await send_chan.send(
                 StreamedMessage(
                     content="Sorry, I either wasn't able to understand your question or I don't have an answer for it."
                 )
             )
+        logger.debug("Handle chat message completed")
