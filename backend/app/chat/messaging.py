@@ -5,10 +5,10 @@ from uuid import uuid4
 from anyio import ClosedResourceError
 from anyio.streams.memory import MemoryObjectSendStream
 
-from llama_index.callbacks.base import BaseCallbackHandler
-from llama_index.callbacks.schema import CBEventType, EventPayload
-from llama_index.query_engine.sub_question_query_engine import SubQuestionAnswerPair
-from llama_index.agent.openai_agent import StreamingAgentChatResponse
+from llama_index.core.callbacks.base import BaseCallbackHandler
+from llama_index.core.callbacks.schema import CBEventType, EventPayload
+from llama_index.core.query_engine.sub_question_query_engine import SubQuestionAnswerPair
+from llama_index.core.chat_engine.types import StreamingAgentChatResponse
 from pydantic import BaseModel
 
 from app import schema
@@ -27,7 +27,7 @@ class StreamedMessageSubProcess(BaseModel):
     source: MessageSubProcessSourceEnum
     has_ended: bool
     event_id: str
-    metadata_map: Optional[SubProcessMetadataMap]
+    metadata_map: Optional[SubProcessMetadataMap] = None
 
 
 class ChatCallbackHandler(BaseCallbackHandler):

@@ -1,4 +1,4 @@
-from typing import Optional, cast, Sequence, List
+from typing import Optional, Sequence, List
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.db import Conversation, Message, Document, ConversationDocument
@@ -77,7 +77,7 @@ async def fetch_message_with_sub_processes(
     result = await db.execute(stmt)  # execute the statement
     message = result.scalars().first()  # get the first result
     if message is not None:
-        return schema.Message.from_orm(message)
+        return schema.Message.model_validate(message, from_attributes=True)
     return None
 
 
@@ -104,7 +104,7 @@ async def fetch_documents(
         stmt = stmt.limit(limit)
     result = await db.execute(stmt)
     documents = result.scalars().all()
-    return [schema.Document.from_orm(doc) for doc in documents]
+    return [schema.Document.model_validate(doc, from_attributes=True) for doc in documents]
 
 
 async def upsert_document_by_url(
@@ -116,10 +116,10 @@ async def upsert_document_by_url(
     stmt = insert(Document).values(**document.dict(exclude_none=True))
     stmt = stmt.on_conflict_do_update(
         index_elements=[Document.url],
-        set_=document.dict(include={"metadata_map"}),
+        set_=document.model_dump(mode="json", include={"metadata_map"}),
     )
     stmt = stmt.returning(Document)
     result = await db.execute(stmt)
-    upserted_doc = schema.Document.from_orm(result.scalars().first())
+    upserted_doc = schema.Document.model_validate(result.scalars().first(), from_attributes=True)
     await db.commit()
     return upserted_doc

@@ -13,9 +13,10 @@ from app.schema import (
     DocumentMetadataKeysEnum,
     SecDocumentMetadata,
 )
-from llama_index.tools import FunctionTool, ToolMetadata, QueryEngineTool
-from llama_index.indices.service_context import ServiceContext
-from llama_index.agent import OpenAIAgent
+from llama_index.core.tools import FunctionTool, ToolMetadata, QueryEngineTool
+from llama_index.core.callbacks import CallbackManager
+from llama_index.core import Settings
+from llama_index.agent.openai import OpenAIAgent
 from app.core.config import settings
 from app.chat.utils import build_title_for_document
 
@@ -143,15 +144,19 @@ def get_polygon_io_sec_tool(document: DocumentSchema) -> FunctionTool:
 
 
 def get_api_query_engine_tool(
-    document: DocumentSchema, service_context: ServiceContext
+    document: DocumentSchema, callback_manager: CallbackManager,
 ) -> QueryEngineTool:
     polygon_io_tool = get_polygon_io_sec_tool(document)
     tool_metadata = get_tool_metadata_for_document(document)
     doc_title = build_title_for_document(document)
+    llm = Settings.llm.model_copy(
+        update={"callback_manager": callback_manager},
+        deep=True
+    )
     agent = OpenAIAgent.from_tools(
         [polygon_io_tool],
-        llm=service_context.llm,
-        callback_manager=service_context.callback_manager,
+        llm=llm,
+        callback_manager=callback_manager,
         system_prompt=f"You are an agent that is asked quantitative questions about a SEC filing named {doc_title} and you answer them by using your tools.",
     )
     return QueryEngineTool.from_defaults(

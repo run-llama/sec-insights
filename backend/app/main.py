@@ -10,7 +10,7 @@ import alembic.config
 from alembic import script
 from alembic.runtime import migration
 from sqlalchemy.engine import create_engine, Engine
-from llama_index.node_parser.text.utils import split_by_sentence_tokenizer
+from llama_index.core.node_parser.text.utils import split_by_sentence_tokenizer
 
 from app.api.api import api_router
 from app.db.wait_for_db import check_database_connection
@@ -18,6 +18,7 @@ from app.core.config import settings, AppEnvironment
 from app.loader_io import loader_io_router
 from contextlib import asynccontextmanager
 from app.chat.pg_vector import get_vector_store_singleton, CustomPGVectorStore
+from app.llama_index_settings import _setup_llama_index_settings
 
 logger = logging.getLogger(__name__)
 
@@ -109,7 +110,7 @@ if settings.BACKEND_CORS_ORIGINS:
     # allow all origins
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins=[str(origin) for origin in origins],
         allow_origin_regex="https://llama-app-frontend.*\.vercel\.app",
         allow_credentials=True,
         allow_methods=["*"],
@@ -124,6 +125,7 @@ def start():
     print("Running in AppEnvironment: " + settings.ENVIRONMENT.value)
     __setup_logging(settings.LOG_LEVEL)
     __setup_sentry()
+    _setup_llama_index_settings()
     """Launched with `poetry run start` at root level"""
     if settings.RENDER:
         # on render.com deployments, run migrations

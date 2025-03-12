@@ -1,4 +1,4 @@
-from llama_index.vector_stores.types import VectorStore
+from llama_index.core.vector_stores.types import VectorStore
 from llama_index.vector_stores.postgres import PGVectorStore
 from sqlalchemy.engine import make_url
 from app.db.session import SessionLocal as AppSessionLocal, engine as app_engine

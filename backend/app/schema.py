@@ -6,9 +6,9 @@ from enum import Enum
 from typing import List, Optional, Dict, Union, Any
 from uuid import UUID
 from datetime import datetime
-from llama_index.schema import BaseNode, NodeWithScore
-from llama_index.callbacks.schema import EventPayload
-from llama_index.query_engine.sub_question_query_engine import SubQuestionAnswerPair
+from llama_index.core.schema import BaseNode, NodeWithScore
+from llama_index.core.callbacks.schema import EventPayload
+from llama_index.core.query_engine.sub_question_query_engine import SubQuestionAnswerPair
 from app.models.db import (
     MessageRoleEnum,
     MessageStatusEnum,
@@ -28,19 +28,19 @@ class Base(BaseModel):
     updated_at: Optional[datetime] = Field(None, description="Update datetime")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class BaseMetadataObject(BaseModel):
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Citation(BaseMetadataObject):
     document_id: UUID
     text: str
     page_number: int
-    score: Optional[float]
+    score: Optional[float] = None
 
     @validator("document_id")
     def validate_document_id(cls, value):
@@ -67,7 +67,7 @@ class QuestionAnswerPair(BaseMetadataObject):
     """
 
     question: str
-    answer: Optional[str]
+    answer: Optional[str] = None
     citations: Optional[List[Citation]] = None
 
     @classmethod
@@ -104,7 +104,7 @@ class MessageSubProcess(Base):
     message_id: UUID
     source: MessageSubProcessSourceEnum
     status: MessageSubProcessStatusEnum
-    metadata_map: Optional[SubProcessMetadataMap]
+    metadata_map: Optional[SubProcessMetadataMap] = None
 
 
 class Message(Base):
@@ -145,12 +145,12 @@ class SecDocumentMetadata(BaseModel):
     company_ticker: str
     doc_type: SecDocumentTypeEnum
     year: int
-    quarter: Optional[int]
-    accession_number: Optional[str]
-    cik: Optional[str]
-    period_of_report_date: Optional[datetime]
-    filed_as_of_date: Optional[datetime]
-    date_as_of_change: Optional[datetime]
+    quarter: Optional[int] = None
+    accession_number: Optional[str] = None
+    cik: Optional[str] = None
+    period_of_report_date: Optional[datetime] = None
+    filed_as_of_date: Optional[datetime] = None
+    date_as_of_change: Optional[datetime] = None
 
 
 DocumentMetadataMap = Dict[Union[DocumentMetadataKeysEnum, str], Any]
