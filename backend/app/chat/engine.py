@@ -54,8 +54,6 @@ logger = logging.getLogger(__name__)
 logger.info("Applying nested asyncio patch")
 nest_asyncio.apply()
 
-OPENAI_TOOL_LLM_NAME = "gpt-3.5-turbo-0613"
-OPENAI_CHAT_LLM_NAME = "gpt-3.5-turbo-0613"
 
 
 def get_s3_fs() -> AsyncFileSystem:
@@ -274,7 +272,7 @@ Any questions about company-related financials or other metrics should be asked 
 
     chat_llm = OpenAI(
         temperature=0,
-        model=OPENAI_CHAT_LLM_NAME,
+        model=settings.OPENAI_CHAT_LLM_NAME,
         streaming=True,
         api_key=settings.OPENAI_API_KEY,
     )

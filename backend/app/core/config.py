@@ -65,6 +65,7 @@ class Settings(PreviewPrefixedSettings):
     LOADER_IO_VERIFICATION_STR: str = "loaderio-e51043c635e0f4656473d3570ae5d9ec"
     SEC_EDGAR_COMPANY_NAME: str = "YourOrgName"
     SEC_EDGAR_EMAIL: EmailStr = "you@example.com"
+    OPENAI_CHAT_LLM_NAME: str = "gpt-4o-mini"
 
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000", \

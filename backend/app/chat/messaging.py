@@ -27,7 +27,7 @@ class StreamedMessageSubProcess(BaseModel):
     source: MessageSubProcessSourceEnum
     has_ended: bool
     event_id: str
-    metadata_map: Optional[SubProcessMetadataMap]
+    metadata_map: Optional[SubProcessMetadataMap] = None
 
 
 class ChatCallbackHandler(BaseCallbackHandler):
