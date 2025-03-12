@@ -11,6 +11,7 @@ from alembic import script
 from alembic.runtime import migration
 from sqlalchemy.engine import create_engine, Engine
 from llama_index.core.node_parser.text.utils import split_by_sentence_tokenizer
+import llama_index.core
 
 from app.api.api import api_router
 from app.db.wait_for_db import check_database_connection
@@ -89,6 +90,10 @@ async def lifespan(app: FastAPI):
     except FileExistsError:
         # Sometimes seen in deployments, should be benign.
         logger.info("Tried to re-download NLTK files but already exists.")
+
+    if not settings.RENDER:
+        llama_index.core.set_global_handler("arize_phoenix")
+
     yield
     # This section is run on app shutdown
     await vector_store.close()

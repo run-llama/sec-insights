@@ -51,6 +51,8 @@ fire = "^0.5.0"
 sec-edgar-downloader = "~5.0"
 pytickersymbols = "^1.13.0"
 awscli-local = "^0.20"
+llama-index-callbacks-arize-phoenix = "^0.4.0"
+arize-phoenix = "^8.12.1"
 
 [tool.poetry.scripts]
 start = "app.main:start"

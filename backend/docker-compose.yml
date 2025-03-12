@@ -11,6 +11,7 @@ services:
       - "127.0.0.1:8000:8000"
     depends_on:
       - db
+      - phoenix
     env_file:
       - .env
       - .env.docker
@@ -40,6 +41,15 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+
+  # useful for local workflow debugging
+  # taken from here: https://docs.arize.com/phoenix/deployment/docker#postgresql
+  phoenix:
+    image: arizephoenix/phoenix:latest # Must be greater than 4.0 version to work
+    ports:
+      - 6006:6006 # PHOENIX_PORT
+      - 4317:4317 # PHOENIX_GRPC_PORT
+      - 9090:9090 # [Optional] PROMETHEUS PORT IF ENABLED
 
 volumes:
   postgres_data:

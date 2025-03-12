@@ -31,6 +31,11 @@ For any issues in setting up the above or during the rest of your development, y
 - [Open & already closed Github Issues](https://github.com/run-llama/sec-insights/issues?q=is%3Aissue+is%3Aclosed)
 - The [#sec-insights discord channel](https://discord.com/channels/1059199217496772688/1150942525968879636)
 
+## LLM Observability
+
+This project will automatically spin up a local version of [Arize Phoenix](https://phoenix.arize.com/) for you and send traces to it as you're using the chat interface.
+Arize Phoenix is a open source LLM observability & evaluation tool. LlamaIndex's event instrumentation system is deeply integrated with Arize Phoenix to make it easier for you to debug your LLM application during development. Simply open the Arize Phoenix Dashboard at [`http://localhost:6006/`](http://localhost:6006/) when running SEC Insights locally to see the traced calls to LLMs, Embedding Models, Vector DBs, and more.
+
 ## Scripts
 The `scripts/` folder contains several scripts that are useful for both operations and development.
 

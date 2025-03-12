@@ -1,7 +1,7 @@
 run:
 	echo "Running in local mode."
-	docker compose create db localstack
-	docker compose start db localstack
+	docker compose create db localstack phoenix
+	docker compose start db localstack phoenix
 	poetry run start
 
 run_docker:
