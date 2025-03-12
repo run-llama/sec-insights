@@ -5,7 +5,6 @@ from datetime import datetime
 import s3fs
 from fsspec.asyn import AsyncFileSystem
 from llama_index.core import (
-    ServiceContext,
     VectorStoreIndex,
     StorageContext,
     load_indices_from_storage,
@@ -21,11 +20,6 @@ from llama_index.core.schema import Document as LlamaIndexDocument
 from llama_index.core.chat_engine.types import ChatMessage
 from llama_index.agent.openai import OpenAIAgent
 from llama_index.llms.openai import OpenAI
-from llama_index.embeddings.openai import (
-    OpenAIEmbedding,
-    OpenAIEmbeddingMode,
-    OpenAIEmbeddingModelType,
-)
 from llama_index.core.base.llms.types import MessageRole
 from llama_index.core.callbacks.base import BaseCallbackHandler, CallbackManager
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
@@ -35,7 +29,6 @@ from llama_index.core.vector_stores.types import (
     MetadataFilters,
     ExactMatchFilter,
 )
-from llama_index.core.node_parser import SentenceSplitter
 from app.core.config import settings
 from app.schema import (
     Message as MessageSchema,
@@ -48,8 +41,6 @@ from app.models.db import MessageRoleEnum, MessageStatusEnum
 from app.chat.constants import (
     DB_DOC_ID_KEY,
     SYSTEM_MESSAGE,
-    NODE_PARSER_CHUNK_OVERLAP,
-    NODE_PARSER_CHUNK_SIZE,
 )
 from app.chat.tools import get_api_query_engine_tool
 from app.chat.utils import build_title_for_document
@@ -133,7 +124,7 @@ def get_storage_context(
 
 
 async def build_doc_id_to_index_map(
-    service_context: ServiceContext,
+    callback_manager: CallbackManager,
     documents: List[DocumentSchema],
     fs: Optional[AsyncFileSystem] = None,
 ) -> Dict[str, VectorStoreIndex]:
@@ -155,7 +146,7 @@ async def build_doc_id_to_index_map(
         indices = load_indices_from_storage(
             storage_context,
             index_ids=index_ids,
-            service_context=service_context,
+            callback_manager=callback_manager,
         )
         doc_id_to_index = dict(zip(index_ids, indices))
         logger.debug("Loaded indices from storage.")
@@ -174,7 +165,7 @@ async def build_doc_id_to_index_map(
             index = VectorStoreIndex.from_documents(
                 llama_index_docs,
                 storage_context=storage_context,
-                service_context=service_context,
+                callback_manager=callback_manager,
             )
             index.set_index_id(str(doc.id))
             index.storage_context.persist(persist_dir=persist_dir, fs=fs)
@@ -212,44 +203,14 @@ def get_chat_history(
     return chat_history
 
 
-def get_tool_service_context(
-    callback_handlers: List[BaseCallbackHandler],
-) -> ServiceContext:
-    llm = OpenAI(
-        temperature=0,
-        model=OPENAI_TOOL_LLM_NAME,
-        streaming=False,
-        api_key=settings.OPENAI_API_KEY,
-    )
-    callback_manager = CallbackManager(callback_handlers)
-    embedding_model = OpenAIEmbedding(
-        mode=OpenAIEmbeddingMode.SIMILARITY_MODE,
-        model_type=OpenAIEmbeddingModelType.TEXT_EMBED_ADA_002,
-        api_key=settings.OPENAI_API_KEY,
-    )
-    # Use a smaller chunk size to retrieve more granular results
-    node_parser = SentenceSplitter.from_defaults(
-        chunk_size=NODE_PARSER_CHUNK_SIZE,
-        chunk_overlap=NODE_PARSER_CHUNK_OVERLAP,
-        callback_manager=callback_manager,
-    )
-    service_context = ServiceContext.from_defaults(
-        callback_manager=callback_manager,
-        llm=llm,
-        embed_model=embedding_model,
-        node_parser=node_parser,
-    )
-    return service_context
-
-
 async def get_chat_engine(
     callback_handler: BaseCallbackHandler,
     conversation: ConversationSchema,
 ) -> OpenAIAgent:
-    service_context = get_tool_service_context([callback_handler])
+    callback_manager = CallbackManager([callback_handler])
     s3_fs = get_s3_fs()
     doc_id_to_index = await build_doc_id_to_index_map(
-        service_context, conversation.documents, fs=s3_fs
+        callback_manager, conversation.documents, fs=s3_fs
     )
     id_to_doc: Dict[str, DocumentSchema] = {
         str(doc.id): doc for doc in conversation.documents
@@ -266,25 +227,23 @@ async def get_chat_engine(
         for doc_id, index in doc_id_to_index.items()
     ]
 
-    response_synth = get_custom_response_synth(service_context, conversation.documents)
+    response_synth = get_custom_response_synth(callback_manager, conversation.documents)
 
     qualitative_question_engine = SubQuestionQueryEngine.from_defaults(
         query_engine_tools=vector_query_engine_tools,
-        service_context=service_context,
         response_synthesizer=response_synth,
         verbose=settings.VERBOSE,
         use_async=True,
     )
 
     api_query_engine_tools = [
-        get_api_query_engine_tool(doc, service_context)
+        get_api_query_engine_tool(doc, callback_manager)
         for doc in conversation.documents
         if DocumentMetadataKeysEnum.SEC_DOCUMENT in doc.metadata_map
     ]
 
     quantitative_question_engine = SubQuestionQueryEngine.from_defaults(
         query_engine_tools=api_query_engine_tools,
-        service_context=service_context,
         response_synthesizer=response_synth,
         verbose=settings.VERBOSE,
         use_async=True,
@@ -337,7 +296,7 @@ Any questions about company-related financials or other metrics should be asked 
         chat_history=chat_history,
         verbose=settings.VERBOSE,
         system_prompt=SYSTEM_MESSAGE.format(doc_titles=doc_titles, curr_date=curr_date),
-        callback_manager=service_context.callback_manager,
+        callback_manager=callback_manager,
         max_function_calls=3,
     )
 

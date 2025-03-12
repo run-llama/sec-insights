@@ -18,6 +18,7 @@ from app.core.config import settings, AppEnvironment
 from app.loader_io import loader_io_router
 from contextlib import asynccontextmanager
 from app.chat.pg_vector import get_vector_store_singleton, CustomPGVectorStore
+from app.llama_index_settings import _setup_llama_index_settings
 
 logger = logging.getLogger(__name__)
 
@@ -124,6 +125,7 @@ def start():
     print("Running in AppEnvironment: " + settings.ENVIRONMENT.value)
     __setup_logging(settings.LOG_LEVEL)
     __setup_sentry()
+    _setup_llama_index_settings()
     """Launched with `poetry run start` at root level"""
     if settings.RENDER:
         # on render.com deployments, run migrations

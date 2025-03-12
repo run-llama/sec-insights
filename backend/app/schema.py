@@ -28,12 +28,12 @@ class Base(BaseModel):
     updated_at: Optional[datetime] = Field(None, description="Update datetime")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class BaseMetadataObject(BaseModel):
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Citation(BaseMetadataObject):
