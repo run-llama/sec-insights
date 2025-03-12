@@ -1,5 +1,4 @@
 # SEC Insights 🏦
-<a href="https://www.producthunt.com/posts/sec-insights-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-sec&#0045;insights&#0045;ai" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=410213&theme=light&period=daily" alt="SEC&#0032;Insights&#0032;AI - Revolutionizing&#0032;SEC&#0032;document&#0032;analysis | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/run-llama/sec-insights)
 
