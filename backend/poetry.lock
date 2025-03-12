@@ -1798,13 +1798,12 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "polygon"
-version = "1.1.0"
+version = "1.2.6"
 description = "A Complete Python Wrapper for Polygon.io APIs."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "polygon-1.1.0-py2.py3-none-any.whl", hash = "sha256:d3b5c56a8d2cdc924bb6d4dee62b2cf02e71529512fbbc34a8cd0ae586a84652"},
-    {file = "polygon-1.1.0.tar.gz", hash = "sha256:0d65274b4f8dc14abb101e811e5c8497f20b98dfd36d827d223af0db5cf763a7"},
+    {file = "polygon-1.2.6-py2.py3-none-any.whl", hash = "sha256:1568290bc81e2ba6ed5eb4801a4646f5d93f4e33cc7c5525096cbc765544349c"},
 ]
 
 [package.dependencies]
@@ -1820,19 +1819,19 @@ uvloop = ["uvloop"]
 
 [[package]]
 name = "polygon-api-client"
-version = "1.12.3"
+version = "1.14.4"
 description = "Official Polygon.io REST and Websocket client."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "polygon_api_client-1.12.3-py3-none-any.whl", hash = "sha256:c8c8cf170d7a50dcbf18327685399f12eb69519fef84f411e07bd6a0424fc15f"},
-    {file = "polygon_api_client-1.12.3.tar.gz", hash = "sha256:1c38e8bafc15b3de5e8cf98150cc5767e5f0d2aeefd185a5f59fd15b2ecb0a83"},
+    {file = "polygon_api_client-1.14.4-py3-none-any.whl", hash = "sha256:0e7d3280c07339f01420ea51ba77f6f058263d3788f0dce0ceeac1fcdd827618"},
+    {file = "polygon_api_client-1.14.4.tar.gz", hash = "sha256:fb095d9e83246c981aa7518cec59c785d426fd0643e51f83aa86a4ed10aecf7a"},
 ]
 
 [package.dependencies]
-certifi = ">=2022.5.18,<2024.0.0"
-urllib3 = ">=1.26.9,<2.0.0"
-websockets = ">=10.3,<12.0"
+certifi = ">=2022.5.18,<2026.0.0"
+urllib3 = ">=1.26.9,<3.0.0"
+websockets = ">=10.3,<15.0"
 
 [[package]]
 name = "psycopg2"
@@ -3086,4 +3085,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11,<3.12"
-content-hash = "ef0e404d8dfa405a6570baaf5601ea6d3086178881edb96d50a813895df827d0"
+content-hash = "092b7018d5140d34ed465d608af462ec7bb0e2effadeb3d455d0458bf120adf7"
