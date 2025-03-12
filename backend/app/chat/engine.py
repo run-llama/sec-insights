@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 import s3fs
 from fsspec.asyn import AsyncFileSystem
-from llama_index import (
+from llama_index.core import (
     ServiceContext,
     VectorStoreIndex,
     StorageContext,
@@ -16,16 +16,17 @@ import requests
 import nest_asyncio
 from datetime import timedelta
 from cachetools import cached, TTLCache
-from llama_index.readers.file.docs_reader import PDFReader
+from llama_index.readers.file.docs.base import PDFReader
 from llama_index.core.schema import Document as LlamaIndexDocument
-from llama_index.agent import OpenAIAgent
-from llama_index.llms import ChatMessage, OpenAI
+from llama_index.core.chat_engine.types import ChatMessage
+from llama_index.agent.openai import OpenAIAgent
+from llama_index.llms.openai import OpenAI
 from llama_index.embeddings.openai import (
     OpenAIEmbedding,
     OpenAIEmbeddingMode,
     OpenAIEmbeddingModelType,
 )
-from llama_index.core.llms.base import MessageRole
+from llama_index.core.base.llms.types import MessageRole
 from llama_index.core.callbacks.base import BaseCallbackHandler, CallbackManager
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.query_engine import SubQuestionQueryEngine

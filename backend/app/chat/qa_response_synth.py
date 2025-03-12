@@ -1,11 +1,11 @@
 from typing import List
-from llama_index.response_synthesizers import BaseSynthesizer
-from llama_index.indices.service_context import ServiceContext
-from llama_index.prompts.prompts import RefinePrompt, QuestionAnswerPrompt
-from llama_index.prompts.prompt_type import PromptType
+from llama_index.core.response_synthesizers import BaseSynthesizer
+from llama_index.core import ServiceContext
+from llama_index.core.prompts.prompts import RefinePrompt, QuestionAnswerPrompt
+from llama_index.core.prompts.prompt_type import PromptType
 from app.schema import Document as DocumentSchema
 from app.chat.utils import build_title_for_document
-from llama_index.response_synthesizers.factory import get_response_synthesizer
+from llama_index.core.response_synthesizers.factory import get_response_synthesizer
 
 
 def get_custom_response_synth(

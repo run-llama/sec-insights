@@ -10,7 +10,7 @@ import alembic.config
 from alembic import script
 from alembic.runtime import migration
 from sqlalchemy.engine import create_engine, Engine
-from llama_index.node_parser.text.utils import split_by_sentence_tokenizer
+from llama_index.core.node_parser.text.utils import split_by_sentence_tokenizer
 
 from app.api.api import api_router
 from app.db.wait_for_db import check_database_connection

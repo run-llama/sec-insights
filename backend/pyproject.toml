@@ -18,14 +18,14 @@ alembic = "^1.11.1"
 psycopg2 = {extras = ["binary"], version = "^2.9.6"}
 psycopg2-binary = "^2.9.6"
 sse-starlette = "^1.6.1"
-pypdf = "^3.9.1"
+pypdf = "^5.3.1"
 anyio = "^3.7.0"
 s3fs = "^2023.6.0"
 fsspec = "^2023.6.0"
 pdfkit = "^1.0.0"
 pgvector = "^0.3.6"
 sentry-sdk = {extras = ["fastapi"], version = "^1.28.1"}
-llama-index-core = "0.12.6"
+llama-index-core = "0.12.23"
 polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
@@ -35,6 +35,10 @@ email-validator = "^2.0.0.post2"
 pydantic-settings = "^2.8.1"
 openai = "^1.66.2"
 llama-index-vector-stores-postgres = "^0.4.2"
+llama-index-embeddings-openai = "^0.3.1"
+llama-index-readers-file = "^0.4.6"
+llama-index-llms-openai = "^0.3.25"
+llama-index-agent-openai = "^0.4.6"
 
 
 [tool.poetry.group.dev.dependencies]
