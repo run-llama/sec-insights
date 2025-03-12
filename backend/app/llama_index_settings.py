@@ -11,7 +11,10 @@ from app.chat.constants import (
 )
 
 def _setup_llama_index_settings() -> _Settings:
-    Settings.llm = OpenAI(model="gpt-4o", api_key=settings.OPENAI_API_KEY)
+    Settings.llm = OpenAI(
+        model=settings.OPENAI_CHAT_LLM_NAME,
+        api_key=settings.OPENAI_API_KEY
+    )
     Settings.embed_model = OpenAIEmbedding(
         mode=OpenAIEmbeddingMode.SIMILARITY_MODE,
         model_type=OpenAIEmbeddingModelType.TEXT_EMBED_3_SMALL,
