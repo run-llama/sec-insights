@@ -160,7 +160,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--base_url",
         type=str,
-        default="https://llama-app-backend-pr-127.onrender.com",
+        default="http://localhost:8000",
         help="an optional base url for the API endpoints",
     )
     args = parser.parse_args()
