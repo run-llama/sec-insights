@@ -10,14 +10,14 @@ from llama_index import (
     StorageContext,
     load_indices_from_storage,
 )
-from llama_index.vector_stores.types import VectorStore
+from llama_index.core.vector_stores.types import VectorStore
 from tempfile import TemporaryDirectory
 import requests
 import nest_asyncio
 from datetime import timedelta
 from cachetools import cached, TTLCache
 from llama_index.readers.file.docs_reader import PDFReader
-from llama_index.schema import Document as LlamaIndexDocument
+from llama_index.core.schema import Document as LlamaIndexDocument
 from llama_index.agent import OpenAIAgent
 from llama_index.llms import ChatMessage, OpenAI
 from llama_index.embeddings.openai import (
@@ -25,16 +25,16 @@ from llama_index.embeddings.openai import (
     OpenAIEmbeddingMode,
     OpenAIEmbeddingModelType,
 )
-from llama_index.llms.base import MessageRole
-from llama_index.callbacks.base import BaseCallbackHandler, CallbackManager
-from llama_index.tools import QueryEngineTool, ToolMetadata
-from llama_index.query_engine import SubQuestionQueryEngine
-from llama_index.indices.query.base import BaseQueryEngine
-from llama_index.vector_stores.types import (
+from llama_index.core.llms.base import MessageRole
+from llama_index.core.callbacks.base import BaseCallbackHandler, CallbackManager
+from llama_index.core.tools import QueryEngineTool, ToolMetadata
+from llama_index.core.query_engine import SubQuestionQueryEngine
+from llama_index.core.indices.query.base import BaseQueryEngine
+from llama_index.core.vector_stores.types import (
     MetadataFilters,
     ExactMatchFilter,
 )
-from llama_index.node_parser import SentenceSplitter
+from llama_index.core.node_parser import SentenceSplitter
 from app.core.config import settings
 from app.schema import (
     Message as MessageSchema,
