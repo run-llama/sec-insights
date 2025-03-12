@@ -32,7 +32,7 @@ Use this repository as a reference when building out your own RAG application or
 - Robust local environment setup making use of [LocalStack](https://localstack.cloud/) & [Docker](https://www.docker.com/) compose
 - Monitoring & Profiling provided by [Sentry](https://sentry.io/welcome/)
 - Load Testing provided by [Loader.io](https://loader.io/)
-- Local LLM Observability by [Arize Phoenix](https://phoenix.arize.com/)
+- LLM Observability by [Arize Phoenix](https://phoenix.arize.com/)
 - Variety of python scripts for REPL-based chat & data management
 
 ## Tech Stack ⚒️
