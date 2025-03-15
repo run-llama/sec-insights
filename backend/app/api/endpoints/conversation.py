@@ -23,6 +23,16 @@ from app.models.db import (
     MessageSubProcessStatusEnum,
 )
 from uuid import UUID
+from guardrails import Guard
+from guardrails.hub import ToxicLanguage, RestrictToTopic
+
+guard = Guard().use_many(
+    # RestrictToTopic(
+    #     valid_topics=["artificial intelligence", "coding", "Language Models", "machine learning"],
+    #     on_fail="exception"
+    # ),
+    ToxicLanguage(threshold=0.5, on_fail="exception")  # Blocks toxic content
+)
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -83,12 +93,17 @@ async def message_conversation(
     conversation = await crud.fetch_conversation_with_messages(db, str(conversation_id))
     if conversation is None:
         raise HTTPException(status_code=404, detail="Conversation not found")
+    # Validate user input with Guardrails
+    try:
+        validated_input = guard.validate(user_message)  # Use async validation
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Input validation failed: {str(e)}")
 
     user_message = Message(
         created_at=datetime.datetime.utcnow(),
         updated_at=datetime.datetime.utcnow(),
         conversation_id=conversation_id,
-        content=user_message,
+        content=validated_input.validated_output,
         role=MessageRoleEnum.user,
         status=MessageStatusEnum.SUCCESS,
     )
@@ -111,10 +126,21 @@ async def message_conversation(
             )
             final_status = MessageStatusEnum.ERROR
             event_id_to_sub_process = OrderedDict()
+            response_complete = False
             try:
                 async for message_obj in recv_chan:
                     if isinstance(message_obj, StreamedMessage):
+                        # try:
+                        #     validated_content = guard.validate(message_obj.content)
+                        #     message.content = validated_content
+                        # except Exception as e:
+                        #     logger.error(f"Output validation failed: {str(e)}")
+                        #     message.content = "Response blocked due to validation failure."
+                        #     final_status = MessageStatusEnum.ERROR
+                        #     break
                         message.content = message_obj.content
+                        if message.content.strip():  # Main response received
+                            response_complete = True
                     elif isinstance(message_obj, StreamedMessageSubProcess):
                         status = (
                             MessageSubProcessStatusEnum.FINISHED
@@ -146,6 +172,11 @@ async def message_conversation(
                         )
                         continue
                     yield schema.Message.from_orm(message).json()
+                    # if response_complete and task.done():
+                    #     break
+                    # if response_complete:
+                    #     logger.debug("Response complete; breaking event loop")
+                    #     break
                 await task
                 if task.exception():
                     raise ValueError(
