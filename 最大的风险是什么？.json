@@ -1,0 +1,337 @@
+# 最大的风险是什么？
+# 1-request
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert financial analyst that always answers questions with the most relevant information using the tools at your disposal.\nThese tools have information regarding companies that the user has expressed interest in.\nHere are some guidelines that you must follow:\n* For financial questions, you must use the tools to find the answer and then write a response.\n* Even if it seems like your tools won't be able to answer the question, you must still use them to find the most relevant information and insights. Not using them will appear as if you are not doing your job.\n* You may assume that the users financial questions are related to the documents they've selected.\n* For any user message that isn't related to financial analysis, respectfully decline to respond and suggest that the user ask a relevant question.\n* If your tools are unable to find an answer, you should say that you haven't found an answer but still relay any useful information the tools found.\n\nThe tools at your disposal have access to the following SEC documents that the user has selected to discuss with you:\n- Amazon.com Inc. (AMZN) 10-K (2022)\n- Meta Platforms, Inc. (META) 10-K (2022)\n\nThe current date is: 2024-04-17"
+    },
+    {
+      "role": "user",
+      "content": "Remember - if I have asked a relevant financial question, use your tools.\n\n最大的风险是什么？"
+    }
+  ],
+  "model": "gpt-3.5-turbo-0613",
+  "stream": true,
+  "temperature": 0,
+  "tool_choice": "auto",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "qualitative_question_engine",
+        "description": "A query engine that can answer qualitative questions about a set of SEC financial documents that the user pre-selected for the conversation.\nAny questions about company-related headwinds, tailwinds, risks, sentiments, or administrative information should be asked here.",
+        "parameters": {
+          "title": "DefaultToolFnSchema",
+          "description": "Default tool function Schema.",
+          "type": "object",
+          "properties": {
+            "input": {
+              "title": "Input",
+              "type": "string"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "quantitative_question_engine",
+        "description": "A query engine that can answer quantitative questions about a set of SEC financial documents that the user pre-selected for the conversation.\nAny questions about company-related financials or other metrics should be asked here.",
+        "parameters": {
+          "title": "DefaultToolFnSchema",
+          "description": "Default tool function Schema.",
+          "type": "object",
+          "properties": {
+            "input": {
+              "title": "Input",
+              "type": "string"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    }
+  ]
+}
+
+# 1-response
+data: {"nonce": "5cd0561f", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_nKsib7ZwYJqlFAG3GwHnh2Me","type":"function","function":{"name":"qualitative_question_engine","arguments":""}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "574ed524", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\n"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "3088ccdb2f9b72bd", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" "}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "e5ecde6e3699e8d2", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" \""}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "95ab203ff25aa5", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"input"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "d53f36758669", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "29", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" \""}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "1c52ef0fc49ff526", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"What"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "79", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" are"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "8234f626ee", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" the"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "fe", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" biggest"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "b198dcbba59f", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" risks"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "2b", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"?\"\n"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "2b", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]},"logprobs":null,"finish_reason":null}]}
+
+
+data: {"nonce": "2b", "id":"chatcmpl-9EzTIf6wgzHM5kbyzT2UYd8IP7fAl","object":"chat.completion.chunk","created":1713359916,"model":"gpt-3.5-turbo-0613","system_fingerprint":null,"choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}]}
+
+
+data: [DONE]
+-----------------------------------------------------------------------------------------------------------------
+
+# 2-request
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are a world class state of the art agent.\n\nYou have access to multiple tools, each representing a different data source or API.\nEach of the tools has a name and a description, formatted as a JSON dictionary.\nThe keys of the dictionary are the names of the tools and the values are the descriptions.\nYour purpose is to help answer a complex user question by generating a list of sub questions that can be answered by the tools.\n\nThese are the guidelines you consider when completing your task:\n* Be as specific as possible\n* The sub questions should be relevant to the user question\n* The sub questions should be answerable by the tools provided\n* You can generate multiple sub questions for each tool\n* Tools must be specified by their name, not their description\n* You don't need to use a tool if you don't think it's relevant\n\nOutput the list of sub questions by calling the SubQuestionList function.\n\n## Tools\n```json\n{\n    \"fa92042d-1fb6-46fa-9ec0-fc6181c4b216\": \"A SEC 10-K filing describing the financials of Amazon.com Inc. (AMZN) for the 2022 time period.\",\n    \"14783d47-bf12-44dc-badd-78a57f1e1f36\": \"A SEC 10-K filing describing the financials of Meta Platforms, Inc. (META) for the 2022 time period.\"\n}\n```\n\n## User Question\nWhat are the biggest risks?\n"
+    }
+  ],
+  "model": "gpt-3.5-turbo-0613",
+  "stream": false,
+  "temperature": 0,
+  "tool_choice": {
+    "type": "function",
+    "function": {
+      "name": "SubQuestionList"
+    }
+  },
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "SubQuestionList",
+        "description": "A pydantic object wrapping a list of sub-questions.\n\nThis is mostly used to make getting a json schema easier.",
+        "parameters": {
+          "title": "SubQuestionList",
+          "description": "A pydantic object wrapping a list of sub-questions.\n\nThis is mostly used to make getting a json schema easier.",
+          "type": "object",
+          "properties": {
+            "items": {
+              "title": "Items",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SubQuestion"
+              }
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "definitions": {
+            "SubQuestion": {
+              "title": "SubQuestion",
+              "type": "object",
+              "properties": {
+                "sub_question": {
+                  "title": "Sub Question",
+                  "type": "string"
+                },
+                "tool_name": {
+                  "title": "Tool Name",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sub_question",
+                "tool_name"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+
+# 2-response
+{
+  "id": "chatcmpl-9EzTKYVCtsPBdRyapbligK1g9lwuZ",
+  "object": "chat.completion",
+  "created": 1713359918,
+  "model": "gpt-3.5-turbo-0613",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_iI4cCE1nV6KJMyZZ33i5AKQM",
+            "type": "function",
+            "function": {
+              "name": "SubQuestionList",
+              "arguments": "{\n  \"items\": [\n    {\n      \"sub_question\": \"What are the biggest risks for Amazon.com Inc. (AMZN) in 2022?\",\n      \"tool_name\": \"fa92042d-1fb6-46fa-9ec0-fc6181c4b216\"\n    },\n    {\n      \"sub_question\": \"What are the biggest risks for Meta Platforms, Inc. (META) in 2022?\",\n      \"tool_name\": \"14783d47-bf12-44dc-badd-78a57f1e1f36\"\n    }\n  ]\n}"
+            }
+          }
+        ]
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 399,
+    "completion_tokens": 126,
+    "total_tokens": 525
+  },
+  "system_fingerprint": null
+}
+
+-----------------------------------------------------------------------------------------------------------------
+# 3-request
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert Q&A system that is trusted around the world.\nAlways answer the query using the provided context information, and not prior knowledge.\nSome rules to follow:\n1. Never directly reference the given context in your answer.\n2. Avoid statements like 'Based on the context, ...' or 'The context information ...' or anything along those lines."
+    },
+    {
+      "role": "user",
+      "content": "Context information is below.\n---------------------\npage_label: 6\nfile_name: fa92042d-1fb6-46fa-9ec0-fc6181c4b216.pdf\ndb_document_id: fa92042d-1fb6-46fa-9ec0-fc6181c4b216\n\nTable\tof\tContents\nBoard\tof\tDirectors\nName\nAge\nPosition\nJeffrey\tP.\tBezos\n59\nExecutive\tChair\nAndrew\tR.\tJassy\n55\nPresident\tand\tChief\tExecutive\tOfficer\nKeith\tB.\tAlexander\n71\nCEO,\tPresident,\tand\tChair\tof\tIronNet,\tInc.\nEdith\tW.\tCooper\n61\nFormer\tExecutive\tVice\tPresident,\tGoldman\tSachs\tGroup,\tInc.\nJamie\tS.\tGorelick\n72\nPartner,\tWilmer\tCutler\tPickering\tHale\tand\tDorr\tLLP\nDaniel\tP.\tHuttenlocher\n64\nDean,\tMIT\tSchwarzman\tCollege\tof\tComputing\nJudith\tA.\tMcGrath\n70\nFormer\tChair\tand\tCEO,\tMTV\tNetworks\nIndra\tK.\tNooyi\n67\nFormer\tChief\tExecutive\tOfficer,\tPepsiCo,\tInc.\nJonathan\tJ.\tRubinstein\n66\nFormer\tco-CEO,\tBridgewater\tAssociates,\tLP\nPatricia\tQ.\tStonesifer\n66\nFormer\tPresident\tand\tChief\tExecutive\tOfficer,\tMartha’s\tTable\nWendell\tP.\tWeeks\n63\nChief\tExecutive\tOfficer,\tCorning\tIncorporated\nItem\t1A.\nRisk\tFactors\nPlease\tcarefully\tconsider\tthe\tfollowing\tdiscussion\tof\tsignificant\tfactors,\tevents,\tand\tuncertainties\tthat\tmake\tan\tinvestment\tin\tour\tsecurities\nrisky.\tThe\tevents\tand\tconsequences\tdiscussed\tin\tthese\trisk\tfactors\tcould,\tin\tcircumstances\twe\tmay\tor\tmay\tnot\tbe\table\tto\taccurately\tpredict,\nrecognize,\tor\tcontrol,\thave\ta\tmaterial\tadverse\teffect\ton\tour\tbusiness,\tgrowth,\treputation,\tprospects,\tfinancial\tcondition,\toperating\tresults\t(including\ncomponents\tof\tour\tfinancial\tresults),\tcash\tflows,\tliquidity,\tand\tstock\tprice.\n\npage_label: 10\nfile_name: fa92042d-1fb6-46fa-9ec0-fc6181c4b216.pdf\ndb_document_id: fa92042d-1fb6-46fa-9ec0-fc6181c4b216\n\nor\tindustry\ttrends,\trestrict\tonline\tadvertising\tor\taffect\tour\tability\tto\tcustomize\tadvertising\nor\totherwise\ttailor\tour\tproduct\tand\tservice\tofferings;\n•\nthe\textent\tto\twhich\tuse\tof\tour\tservices\tis\taffected\tby\tspyware,\tviruses,\tphishing\tand\tother\tspam\temails,\tdenial\tof\tservice\tattacks,\tdata\ttheft,\ncomputer\tintrusions,\toutages,\tand\tsimilar\tevents;\tand\n•\ndisruptions\tfrom\tnatural\tor\thuman-caused\tdisasters\t(including\tpublic\thealth\tcrises)\tor\textreme\tweather\t(including\tas\ta\tresult\tof\tclimate\nchange),\tgeopolitical\tevents\tand\tsecurity\tissues\t(including\tterrorist\tattacks\tand\tarmed\thostilities),\tlabor\tor\ttrade\tdisputes\t(including\nrestrictive\tgovernmental\tactions\timpacting\tus\tand\tour\tthird-party\tsellers\tin\tChina\tor\tother\tforeign\tcountries),\tand\tsimilar\tevents.\nWe\tFace\tRisks\tRelated\tto\tSuccessfully\tOptimizing\tand\tOperating\tOur\tFulfillment\tNetwork\tand\tData\tCenters\nFailures\tto\tadequately\tpredict\tcustomer\tdemand\tor\totherwise\toptimize\tand\toperate\tour\tfulfillment\tnetwork\tand\tdata\tcenters\tsuccessfully\tfrom\ntime\tto\ttime\tresult\tin\texcess\tor\tinsufficient\tfulfillment\tor\tdata\tcenter\tcapacity,\tservice\tinterruptions,\tincreased\tcosts,\tand\timpairment\tcharges,\tany\tof\nwhich\tcould\tmaterially\tharm\tour\tbusiness.\tAs\twe\tcontinue\tto\tadd\tfulfillment\tand\tdata\tcenter\tcapability\tor\tadd\tnew\tbusinesses\twith\tdifferent\nrequirements,\tour\tfulfillment\tand\tdata\tcenter\tnetworks\tbecome\tincreasingly\tcomplex\tand\toperating\tthem\tbecomes\tmore\tchallenging.\tThere\tcan\tbe\nno\tassurance\tthat\twe\twill\tbe\table\tto\toperate\tour\tnetworks\teffectively.\n\npage_label: 3\nfile_name: fa92042d-1fb6-46fa-9ec0-fc6181c4b216.pdf\ndb_document_id: fa92042d-1fb6-46fa-9ec0-fc6181c4b216\n\nTable\tof\tContents\nAMAZON.COM,\tINC.\nPART\tI\nItem\t1.\nBusiness\nThis\tAnnual\tReport\ton\tForm\t10-K\tand\tthe\tdocuments\tincorporated\therein\tby\treference\tcontain\tforward-looking\tstatements\tbased\ton\nexpectations,\testimates,\tand\tprojections\tas\tof\tthe\tdate\tof\tthis\tfiling.\tActual\tresults\tand\toutcomes\tmay\tdiffer\tmaterially\tfrom\tthose\texpressed\tin\nforward-looking\tstatements.\tSee\tItem\t1A\tof\tPart\tI\t—\t“Risk\tFactors.”\tAs\tused\therein,\t“Amazon.com,”\t“we,”\t“our,”\tand\tsimilar\tterms\tinclude\nAmazon.com,\tInc.\tand\tits\tsubsidiaries,\tunless\tthe\tcontext\tindicates\totherwise.\nGeneral\nWe\tseek\tto\tbe\tEarth’s\tmost\tcustomer-centric\tcompany.\tWe\tare\tguided\tby\tfour\tprinciples:\tcustomer\tobsession\trather\tthan\tcompetitor\tfocus,\npassion\tfor\tinvention,\tcommitment\tto\toperational\texcellence,\tand\tlong-term\tthinking.\tIn\teach\tof\tour\tsegments,\twe\tserve\tour\tprimary\tcustomer\tsets,\nconsisting\tof\tconsumers,\tsellers,\tdevelopers,\tenterprises,\tcontent\tcreators,\tadvertisers,\tand\temployees.\nWe\thave\torganized\tour\toperations\tinto\tthree\tsegments:\tNorth\tAmerica,\tInternational,\tand\tAmazon\tWeb\tServices\t(“AWS”).\tThese\tsegments\nreflect\tthe\tway\tthe\tCompany\tevaluates\tits\tbusiness\tperformance\tand\tmanages\tits\toperations.\tInformation\ton\tour\tnet\tsales\tis\tcontained\tin\tItem\t8\tof\nPart\tII,\t“Financial\tStatements\tand\tSupplementary\tData\t—\tNote\t10\t—\tSegment\tInformation.”\nConsumers\nWe\tserve\tconsumers\tthrough\tour\tonline\tand\tphysical\tstores\tand\tfocus\ton\tselection,\tprice,\tand\tconvenience.\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: What are the biggest risks for Amazon.com Inc. (AMZN) in 2022?\nAnswer: "
+    }
+  ],
+  "model": "gpt-3.5-turbo-0613",
+  "stream": false,
+  "temperature": 0
+}
+
+# 3-response
+{
+  "id": "chatcmpl-9EzTOfaDXabYMoIlFBBWBywsM5F5O",
+  "object": "chat.completion",
+  "created": 1713359922,
+  "model": "gpt-3.5-turbo-0613",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The biggest risks for Amazon.com Inc. (AMZN) in 2022 could include factors such as disruptions from natural or human-caused disasters, geopolitical events and security issues, labor or trade disputes, and restrictive governmental actions impacting the company and its third-party sellers in China or other foreign countries. Additionally, risks related to successfully optimizing and operating their fulfillment network and data centers could also pose challenges for the company. These risks could result in service interruptions, increased costs, and impairment charges, which could materially harm Amazon's business."
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1636,
+    "completion_tokens": 106,
+    "total_tokens": 1742
+  },
+  "system_fingerprint": null
+}
+-----------------------------------------------------------------------------------------------------------------
+
+# 4-request
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert Q&A system that is trusted around the world.\nAlways answer the query using the provided context information, and not prior knowledge.\nSome rules to follow:\n1. Never directly reference the given context in your answer.\n2. Avoid statements like 'Based on the context, ...' or 'The context information ...' or anything along those lines."
+    },
+    {
+      "role": "user",
+      "content": "Context information is below.\n---------------------\npage_label: 3\nfile_name: 14783d47-bf12-44dc-badd-78a57f1e1f36.pdf\ndb_document_id: 14783d47-bf12-44dc-badd-78a57f1e1f36\n\nIn\tlight\tof\tthese\trisks,\nuncertainties\tand\tassumptions,\tthe\tfuture\tevents\tand\ttrends\tdiscussed\tin\tthis\tAnnual\tReport\ton\tForm\t10-K\tmay\tnot\toccur\tand\tactual\tresults\tcould\ndiffer\tmaterially\tand\tadversely\tfrom\tthose\tanticipated\tor\timplied\tin\tthe\tforward-looking\tstatements.\nWe\tundertake\tno\tobligation\tto\trevise\tor\tpublicly\trelease\tthe\tresults\tof\tany\trevision\tto\tthese\tforward-looking\tstatements,\texcept\tas\trequired\tby\nlaw.\tGiven\tthese\trisks\tand\tuncertainties,\treaders\tare\tcautioned\tnot\tto\tplace\tundue\treliance\ton\tsuch\tforward-looking\tstatements.\nUnless\texpressly\tindicated\tor\tthe\tcontext\trequires\totherwise,\tthe\tterms\t\"Meta,\"\t\"company,\"\t\"we,\"\t\"us,\"\tand\t\"our\"\tin\tthis\tdocument\trefer\tto\tMeta\nPlatforms,\tInc.,\ta\tDelaware\tcorporation,\tand,\twhere\tappropriate,\tits\tsubsidiaries.\tThe\tterm\t\"Family\"\trefers\tto\tour\tFacebook,\tInstagram,\tMessenger,\nand\tWhatsApp\tproducts.\tFor\treferences\tto\taccessing\tMeta's\tproducts\ton\tthe\t\"web\"\tor\tvia\ta\t\"website,\"\tsuch\tterms\trefer\tto\taccessing\tsuch\tproducts\ton\npersonal\tcomputers.\tFor\treferences\tto\taccessing\tMeta's\tproducts\ton\t\"mobile,\"\tsuch\tterm\trefers\tto\taccessing\tsuch\tproducts\tvia\ta\tmobile\tapplication\tor\nvia\ta\tmobile-optimized\tversion\tof\tour\twebsites\tsuch\tas\tm.facebook.com,\twhether\ton\ta\tmobile\tphone\tor\ttablet.\n3\n\npage_label: 13\nfile_name: 14783d47-bf12-44dc-badd-78a57f1e1f36.pdf\ndb_document_id: 14783d47-bf12-44dc-badd-78a57f1e1f36\n\nWe\noffer\ta\twide\trange\tof\tbenefits\tacross\tareas\tsuch\tas\thealth,\tfamily,\tfinance,\tcommunity,\tand\ttime\taway,\tincluding\thealthcare\tand\twellness\tbenefits,\nfamily\tbuilding\tbenefits,\tfamily\tcare\tresources,\tretirement\tsavings\tplans,\taccess\tto\ttax\tand\tlegal\tservices,\tand\tMeta\tResource\tGroups\tto\tbuild\ncommunity\tat\tMeta.\nCorporate\tInformation\nWe\twere\tincorporated\tin\tDelaware\tin\tJuly\t2004.\tWe\tcompleted\tour\tinitial\tpublic\toffering\tin\tMay\t2012\tand\tour\tClass\tA\tcommon\tstock\tis\tcurrently\nlisted\ton\tthe\tNasdaq\tGlobal\tSelect\tMarket\tunder\tthe\tsymbol\t\"META.\"\tOur\tprincipal\texecutive\toffices\tare\tlocated\tat\t1601\tWillow\tRoad,\tMenlo\tPark,\nCalifornia\t94025,\tand\tour\ttelephone\tnumber\tis\t(650)\t543-4800.\nMeta,\tthe\tMeta\tlogo,\tFacebook,\tFB,\tInstagram,\tOculus,\tWhatsApp,\tand\tour\tother\tregistered\tor\tcommon\tlaw\ttrademarks,\tservice\tmarks,\tor\ttrade\nnames\tappearing\tin\tthis\tAnnual\tReport\ton\tForm\t10-K\tare\tthe\tproperty\tof\tMeta\tPlatforms,\tInc.\tor\tits\taffiliates.\tOther\ttrademarks,\tservice\tmarks,\tor\ntrade\tnames\tappearing\tin\tthis\tAnnual\tReport\ton\tForm\t10‑K\tare\tthe\tproperty\tof\ttheir\trespective\towners.\nAvailable\tInformation\nOur\tAnnual\tReports\ton\tForm\t10-K,\tQuarterly\tReports\ton\tForm\t10-Q,\tCurrent\tReports\ton\tForm\t8-K,\tand\tamendments\tto\treports\tfiled\tpursuant\tto\nSections\t13(a)\tand\t15(d)\tof\tthe\tSecurities\tExchange\tAct\tof\t1934,\tas\tamended\t(Exchange\tAct),\tare\tfiled\twith\tthe\tU.S.\n\npage_label: 26\nfile_name: 14783d47-bf12-44dc-badd-78a57f1e1f36.pdf\ndb_document_id: 14783d47-bf12-44dc-badd-78a57f1e1f36\n\nIn\taddition\tto\tthe\timpact\ton\tour\tadvertising\tbusiness,\tthe\tpandemic\nexposes\tour\tbusiness,\toperations,\tand\tworkforce\tto\ta\tvariety\tof\tother\trisks,\tincluding:\n•\nvolatility\tin\tthe\tsize\tof\tour\tuser\tbase\tand\tuser\tengagement,\tparticularly\tfor\tour\tmessaging\tproducts,\twhether\tas\ta\tresult\tof\tshelter-in-place\nmeasures\tor\tother\tfactors;\n•\ndelays\tin\tproduct\tdevelopment\tor\treleases,\tor\treductions\tin\tmanufacturing\tproduction\tand\tsales\tof\tconsumer\thardware,\tas\ta\tresult\tof\ninventory\tshortages,\tsupply\tchain\tor\tlabor\tshortages;\n•\nincreased\tmisuse\tof\tour\tproducts\tand\tservices\tor\tuser\tdata\tby\tthird\tparties,\tincluding\timproper\tadvertising\tpractices\tor\tother\tactivity\ninconsistent\twith\tour\tterms,\tcontracts,\tor\tpolicies,\tmisinformation\tor\tother\tillicit\tor\tobjectionable\tmaterial\ton\tour\tplatforms,\telection\ninterference,\tor\tother\tundesirable\tactivity;\t\n•\nsignificant\tvolatility\tand\tdisruption\tof\tglobal\tfinancial\tmarkets,\twhich\tcould\tcause\tfluctuations\tin\tcurrency\texchange\trates\tor\tnegatively\nimpact\tour\tability\tto\taccess\tcapital\tin\tthe\tfuture;\n•\nillnesses\tto\tkey\temployees,\tor\ta\tsignificant\tportion\tof\tour\tworkforce,\twhich\tmay\tresult\tin\tinefficiencies,\tdelays,\tand\tdisruptions\tin\tour\nbusiness;\tand\n26\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: What are the biggest risks for Meta Platforms, Inc. (META) in 2022?\nAnswer: "
+    }
+  ],
+  "model": "gpt-3.5-turbo-0613",
+  "stream": false,
+  "temperature": 0
+}
+
+# 4-response
+{
+  "id": "chatcmpl-9EzTOzzvsUxlnnwWGXNRuxPFIiznh",
+  "object": "chat.completion",
+  "created": 1713359922,
+  "model": "gpt-3.5-turbo-0613",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The biggest risks for Meta Platforms, Inc. (META) in 2022 include volatility in the size of their user base and user engagement, delays in product development or releases, increased misuse of their products and services or user data by third parties, significant volatility and disruption of global financial markets, and illnesses to key employees or a significant portion of their workforce. These risks could have adverse effects on their advertising business, operations, and workforce."
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1478,
+    "completion_tokens": 88,
+    "total_tokens": 1566
+  },
+  "system_fingerprint": null
+}
+-----------------------------------------------------------------------------------------------------------------
+
+# 5-request
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "A user has selected a set of SEC filing documents and has asked a question about them. The SEC documents have the following titles:\n- Amazon.com Inc. (AMZN) 10-K (2022)\n- Meta Platforms, Inc. (META) 10-K (2022)\nContext information is below.\n---------------------\nSub question: What are the biggest risks for Amazon.com Inc. (AMZN) in 2022?\nResponse: The biggest risks for Amazon.com Inc. (AMZN) in 2022 could include factors such as disruptions from natural or human-caused disasters, geopolitical events and security issues, labor or trade disputes, and restrictive governmental actions impacting the company and its third-party sellers in China or other foreign countries. Additionally, risks related to successfully optimizing and operating their fulfillment network and data centers could also pose challenges for the company. These risks could result in service interruptions, increased costs, and impairment charges, which could materially harm Amazon's business.\n\nSub question: What are the biggest risks for Meta Platforms, Inc. (META) in 2022?\nResponse: The biggest risks for Meta Platforms, Inc. (META) in 2022 include volatility in the size of their user base and user engagement, delays in product development or releases, increased misuse of their products and services or user data by third parties, significant volatility and disruption of global financial markets, and illnesses to key employees or a significant portion of their workforce. These risks could have adverse effects on their advertising business, operations, and workforce.\n---------------------\nGiven the context information and not prior knowledge, answer the query.\nQuery: What are the biggest risks?\nAnswer:"
+    }
+  ],
+  "model": "gpt-3.5-turbo-0613",
+  "stream": false,
+  "temperature": 0
+}
+
+# 5-response
+{
+  "id": "chatcmpl-9EzTQHUZKlyK17fe2KpmS7OzlSCT0",
+  "object": "chat.completion",
+  "created": 1713359924,
+  "model": "gpt-3.5-turbo-0613",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The biggest risks for Amazon.com Inc. (AMZN) in 2022 could include disruptions from natural or human-caused disasters, geopolitical events and security issues, labor or trade disputes, and restrictive governmental actions impacting the company and its third-party sellers in China or other foreign countries. Additionally, risks related to successfully optimizing and operating their fulfillment network and data centers could also pose challenges for the company. These risks could result in service interruptions, increased costs, and impairment charges, which could materially harm Amazon's business.\n\nThe biggest risks for Meta Platforms, Inc. (META) in 2022 include volatility in the size of their user base and user engagement, delays in product development or releases, increased misuse of their products and services or user data by third parties, significant volatility and disruption of global financial markets, and illnesses to key employees or a significant portion of their workforce. These risks could have adverse effects on their advertising business, operations, and workforce."
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 339,
+    "completion_tokens": 191,
+    "total_tokens": 530
+  },
+  "system_fingerprint": null
+}
+-----------------------------------------------------------------------------------------------------------------

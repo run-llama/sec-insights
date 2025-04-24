@@ -12,5 +12,6 @@
     "ghcr.io/devcontainers/features/aws-cli:1": {},
     "ghcr.io/devcontainers/features/node:1": {}
   },
+  "forwardPorts": ["5432:5432"],
   "postCreateCommand": "bash .devcontainer/post_create_command.sh"
 }
