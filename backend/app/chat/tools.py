@@ -87,7 +87,7 @@ def get_tool_metadata_for_document(doc: DocumentSchema) -> ToolMetadata:
     )
 
 
-def get_polygion_io_sec_tool(document: DocumentSchema) -> FunctionTool:
+def get_polygon_io_sec_tool(document: DocumentSchema) -> FunctionTool:
     sec_metadata = SecDocumentMetadata.parse_obj(
         document.metadata_map[DocumentMetadataKeysEnum.SEC_DOCUMENT]
     )
@@ -145,7 +145,7 @@ def get_polygion_io_sec_tool(document: DocumentSchema) -> FunctionTool:
 def get_api_query_engine_tool(
     document: DocumentSchema, service_context: ServiceContext
 ) -> QueryEngineTool:
-    polygon_io_tool = get_polygion_io_sec_tool(document)
+    polygon_io_tool = get_polygon_io_sec_tool(document)
     tool_metadata = get_tool_metadata_for_document(document)
     doc_title = build_title_for_document(document)
     agent = OpenAIAgent.from_tools(
